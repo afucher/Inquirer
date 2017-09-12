@@ -1,2 +1,6 @@
 # Inquirer
-A collection of common interactive command line user interfaces.
+A collection of common interactive command line user interfaces in C#.
+
+
+# Acknowledgments
+Inpired by [SBoundrias/Inquirer.js](https://github.com/SBoudrias/Inquirer.js/)
