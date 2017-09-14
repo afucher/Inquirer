@@ -1,6 +1,6 @@
 ﻿
 using FluentAssertions;
-using Inquirer.Prompts;
+using InquirerCore.Prompts;
 using System;
 using System.IO;
 using Xunit;

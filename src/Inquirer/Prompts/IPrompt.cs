@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Inquirer.Prompts
+namespace InquirerCore.Prompts
 {
     interface IPrompt
     {
