@@ -28,15 +28,14 @@ namespace InquirerUnitTest
             {
                 _Render = () => {
                     calledInput1 = true;
-                    calledInput2.Should().BeFalse();
                 }
             };
             var input2 = new TestPrompt("name", "message")
             {
                 _Render = () =>
                 {
-                    calledInput2 = true;
-                    calledInput1.Should().BeTrue();
+                    if(calledInput1)
+                        calledInput2 = true;
                 }
             };
 
@@ -44,7 +43,6 @@ namespace InquirerUnitTest
 
             Inquirer.Ask();
 
-            calledInput1.Should().BeTrue();
             calledInput2.Should().BeTrue();
         }
     }
