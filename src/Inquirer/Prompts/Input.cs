@@ -7,13 +7,14 @@ namespace Inquirer.Prompts
 {
     public class Input : BasePrompt
     {
+        private string answer;
         public Input(string name, string message) : base(name, message)
         {
         }
 
         public override string Answer()
         {
-            throw new NotImplementedException();
+            return answer;
         }
 
         public override string[] GetQuestion()
@@ -24,6 +25,7 @@ namespace Inquirer.Prompts
         public override void Render()
         {
             GetQuestion().ToList().ForEach(line => Console.WriteLine(line));
+            answer = Console.ReadLine();
         }
     }
 }

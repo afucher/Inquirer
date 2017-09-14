@@ -42,9 +42,10 @@ namespace InquirerUnitTest
             var expected = message + Environment.NewLine;
 
             using (StringWriter sw = new StringWriter())
+            using (StringReader sr = new StringReader(""))
             {
                 Console.SetOut(sw);
-                
+                Console.SetIn(sr);
                 input.Render();
 
                 sw.ToString().Should().Be(expected);
@@ -54,7 +55,41 @@ namespace InquirerUnitTest
         [Fact]
         public void ShouldAnswerTheFirstResponse()
         {
+            var message = "Message";
+            var name = "Name";
+            var input = new Input(name, message);
+            var answer = "Answer" + Environment.NewLine;
+            var expected = "Answer";
 
+            using (StringWriter sw = new StringWriter())
+            using (StringReader sr = new StringReader(answer))
+            {
+                Console.SetOut(sw);
+                Console.SetIn(sr);
+                input.Render();
+                input.Answer().Should().Be(expected);
+            }
+        }
+
+        [Fact]
+        public void ShouldNotFailWhenQuestionHaveMoreThanOneLine(){
+            var message = "First Line" + Environment.NewLine + "Second Line";
+            var name = "Name";
+            var input = new Input(name, message);
+            var expected = message + Environment.NewLine;
+            var answer = "Answer" + Environment.NewLine;
+            var expectedAnswer = "Answer";
+
+            using (StringWriter sw = new StringWriter())
+            using (StringReader sr = new StringReader(answer))
+            {
+                Console.SetOut(sw);
+                Console.SetIn(sr);
+                input.Render();
+
+                sw.ToString().Should().Be(expected);
+                input.Answer().Should().Be(expectedAnswer);
+            }
         }
     }
 }
