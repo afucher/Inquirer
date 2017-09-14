@@ -8,5 +8,6 @@ namespace InquirerCore.Prompts
     {
         void Render();
         string[] GetQuestion();
+        string Answer();
     }
 }
