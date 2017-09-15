@@ -4,6 +4,8 @@ using InquirerCore.Prompts;
 using System;
 using System.IO;
 using Xunit;
+using NSubstitute;
+using InquirerCore.Console;
 
 namespace InquirerUnitTest
 {
@@ -34,41 +36,32 @@ namespace InquirerUnitTest
         }
 
         [Fact]
-        public void ShouldAskTheQuestion()
-        {
+        public void ShouldCallConsoleWriteLine(){
             var message = "Message";
             var name = "Name";
-            var input = new Input(name, message);
-            var expected = message + Environment.NewLine;
+            var console = Substitute.For<IConsole>();
+            var input = new Input(name, message, console);
+            input.Render();
 
-            using (StringWriter sw = new StringWriter())
-            using (StringReader sr = new StringReader(""))
-            {
-                Console.SetOut(sw);
-                Console.SetIn(sr);
-                input.Render();
-
-                sw.ToString().Should().Be(expected);
-            }
+            console.Received().WriteLine(message);
         }
+
 
         [Fact]
         public void ShouldAnswerTheFirstResponse()
         {
             var message = "Message";
             var name = "Name";
-            var input = new Input(name, message);
-            var answer = "Answer" + Environment.NewLine;
-            var expected = "Answer";
+            var console = Substitute.For<IConsole>();
+            var input = new Input(name, message, console);
+            var answer = "Answer";
 
-            using (StringWriter sw = new StringWriter())
-            using (StringReader sr = new StringReader(answer))
-            {
-                Console.SetOut(sw);
-                Console.SetIn(sr);
-                input.Render();
-                input.Answer().Should().Be(expected);
-            }
+            console.ReadLine().Returns(answer);
+
+            input.Render();
+
+            input.Answer().Should().Be(answer);
+
         }
 
         [Fact]
