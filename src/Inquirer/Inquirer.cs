@@ -18,5 +18,10 @@ namespace InquirerCore
         {
             Questions.ForEach((q) => q.Render());
         }
+
+        public string[] Answers()
+        {
+            return Questions.Select(x => x.Answer()).ToArray();
+        }
     }
 }

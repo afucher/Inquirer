@@ -40,5 +40,17 @@ namespace InquirerUnitTest
 
             calledInput2.Should().BeTrue();
         }
+
+        [Fact]
+        public void ShouldReturnOneAnswer()
+        {
+            var input01 = Substitute.For<IPrompt>();
+            input01.Answer().Returns("Answer");
+
+            var Inquirer = new Inquirer(input01);
+            Inquirer.Answers().Should().HaveCount(1);
+            Inquirer.Answers()[0].Should().Be("Answer");
+
+        }
     }
 }
