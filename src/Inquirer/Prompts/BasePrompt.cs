@@ -15,7 +15,7 @@ namespace InquirerCore.Prompts
         {
             this.name = name;
             this.message = message;
-            this.Console = console == null ? new ConsoleWrapper() : console;
+            this.Console = console ?? new ConsoleWrapper();
         }
 
         public abstract string[] GetQuestion();
