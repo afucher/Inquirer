@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InquirerCore.Console
 {
-    interface IConsole
+    public interface IConsole
     {
         void WriteLine(string value);
         string ReadLine();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InquirerCore.Console;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace InquirerCore.Prompts
     public class Input : BasePrompt
     {
         private string answer;
-        public Input(string name, string message) : base(name, message)
+        public Input(string name, string message, IConsole console = null) : base(name, message, console)
         {
         }
 
