@@ -8,10 +8,10 @@ namespace InquirerCore
 {
     public class Inquirer
     {
-        public List<BasePrompt> Questions { get; private set; }
-        public Inquirer(params BasePrompt[] questions)
+        public List<IPrompt> Questions { get; private set; }
+        public Inquirer(params IPrompt[] questions)
         {
-            Questions = questions.ToList<BasePrompt>();
+            Questions = questions.ToList<IPrompt>();
         }
 
         public void Ask()

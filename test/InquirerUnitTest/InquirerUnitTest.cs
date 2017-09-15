@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using InquirerCore;
 using InquirerCore.Prompts;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,22 +25,16 @@ namespace InquirerUnitTest
         {
             var calledInput1 = false;
             var calledInput2 = false;
-            var input1 = new TestPrompt("name", "message")
-            {
-                _Render = () => {
-                    calledInput1 = true;
-                }
-            };
-            var input2 = new TestPrompt("name", "message")
-            {
-                _Render = () =>
-                {
-                    if(calledInput1)
-                        calledInput2 = true;
-                }
-            };
+            var input01 = Substitute.For<IPrompt>();
+            var input02 = Substitute.For<IPrompt>();
 
-            var Inquirer = new Inquirer(input1, input2);
+            input01.When(x => x.Render())
+                    .Do(x => calledInput1 = true);
+            input02.When(x => x.Render())
+                    .Do(x => { if (calledInput1) calledInput2 = true; });
+
+
+            var Inquirer = new Inquirer(input01, input02);
 
             Inquirer.Ask();
 

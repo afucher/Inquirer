@@ -4,7 +4,7 @@ using System.Text;
 
 namespace InquirerCore.Prompts
 {
-    interface IPrompt
+    public interface IPrompt
     {
         void Render();
         string[] GetQuestion();
