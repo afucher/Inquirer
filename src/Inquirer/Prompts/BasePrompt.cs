@@ -12,9 +12,9 @@ namespace InquirerCore.Prompts
         public string message { private set; get; }
         protected IValidator Validator;
         protected IConsole Console;
-        protected readonly IConsoleRender consoleRender;
+        protected readonly IRender consoleRender;
 
-        public BasePrompt(string name, string message, IConsoleRender consoleRender, IConsole console = null)
+        public BasePrompt(string name, string message, IRender consoleRender, IConsole console = null)
         {
             this.name = name;
             this.message = message;

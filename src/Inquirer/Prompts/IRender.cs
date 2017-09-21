@@ -1,6 +1,6 @@
 ﻿namespace InquirerCore.Prompts
 {
-    public interface IConsoleRender
+    public interface IRender
     {
         void RenderMultipleMessages(string[] mensagens);
     }
