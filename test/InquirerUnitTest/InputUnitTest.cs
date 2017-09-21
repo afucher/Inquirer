@@ -102,6 +102,7 @@ namespace InquirerUnitTest
             var answer = "Answer";
 
             console.ReadLine().Returns(answer);
+            consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
             valid.Validate(answer).Returns(false, true);
 
             input.SetValid(valid);

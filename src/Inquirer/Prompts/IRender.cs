@@ -2,6 +2,7 @@
 {
     public interface IRender
     {
-        void RenderMultipleMessages(string[] mensagens);
+        int[,] RenderMultipleMessages(string[] mensagens);
+        void Clean(int initialPos, int endPos);
     }
 }

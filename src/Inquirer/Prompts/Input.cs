@@ -20,9 +20,10 @@ namespace InquirerCore.Prompts
 
         public override void Ask()
         {
-            consoleRender.RenderMultipleMessages(GetQuestion());
+            var pos = consoleRender.RenderMultipleMessages(GetQuestion());
             answer = Console.ReadLine();
             while(!(Validator == null || Validator.Validate(answer))){
+                consoleRender.Clean(pos[0, 1], pos[1, 1]);
                 consoleRender.RenderMultipleMessages(GetQuestion());
                 answer = Console.ReadLine();
             }
