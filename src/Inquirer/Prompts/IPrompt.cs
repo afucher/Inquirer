@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InquirerCore.Validators;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,5 +10,7 @@ namespace InquirerCore.Prompts
         void Render();
         string[] GetQuestion();
         string Answer();
+        void Ask();
+        void SetValid(IValidator validator);
     }
 }
