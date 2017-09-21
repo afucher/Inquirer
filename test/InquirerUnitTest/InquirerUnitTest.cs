@@ -14,8 +14,8 @@ namespace InquirerUnitTest
         [Fact]
         public void ShouldInitializeWithQuestions()
         {
-            var input1 = new Input("name", "message");
-            var input2 = new Input("name", "message");
+            var input1 = Substitute.For<IPrompt>();
+            var input2 = Substitute.For<IPrompt>();
             var Inquirer = new Inquirer(input1, input2);
             Inquirer.Questions.Should().HaveCount(2);
         }

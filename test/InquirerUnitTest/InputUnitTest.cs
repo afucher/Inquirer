@@ -6,6 +6,7 @@ using System.IO;
 using Xunit;
 using NSubstitute;
 using InquirerCore.Console;
+using InquirerCore.Validators;
 
 namespace InquirerUnitTest
 {
@@ -16,7 +17,8 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var input = new Input(name, message);
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender);
 
             input.message.Should().Be(message);
             input.name.Should().Be(name);
@@ -27,7 +29,8 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var input = new Input(name, message);
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender);
 
             var question = input.GetQuestion();
 
@@ -36,11 +39,13 @@ namespace InquirerUnitTest
         }
 
         [Fact]
-        public void ShouldCallConsoleWriteLine(){
+        public void ShouldCallConsoleWriteLine()
+        {
             var message = "Message";
             var name = "Name";
             var console = Substitute.For<IConsole>();
-            var input = new Input(name, message, console);
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender, console);
             input.Render();
 
             console.Received().WriteLine(message);
@@ -53,36 +58,57 @@ namespace InquirerUnitTest
             var message = "Message";
             var name = "Name";
             var console = Substitute.For<IConsole>();
-            var input = new Input(name, message, console);
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
             console.ReadLine().Returns(answer);
 
-            input.Render();
+            input.Ask();
 
             input.Answer().Should().Be(answer);
 
         }
 
         [Fact]
-        public void ShouldNotFailWhenQuestionHaveMoreThanOneLine(){
-            var message = "First Line" + Environment.NewLine + "Second Line";
+        public void ShouldCallValid()
+        {
+            var message = "Message";
             var name = "Name";
-            var input = new Input(name, message);
-            var expected = message + Environment.NewLine;
-            var answer = "Answer" + Environment.NewLine;
-            var expectedAnswer = "Answer";
+            var console = Substitute.For<IConsole>();
+            var valid = Substitute.For<IValidator>();
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender, console);
+            var answer = "Answer";
 
-            using (StringWriter sw = new StringWriter())
-            using (StringReader sr = new StringReader(answer))
-            {
-                Console.SetOut(sw);
-                Console.SetIn(sr);
-                input.Render();
+            console.ReadLine().Returns(answer);
+            valid.Validate(answer).Returns(true);
 
-                sw.ToString().Should().Be(expected);
-                input.Answer().Should().Be(expectedAnswer);
-            }
+            input.SetValid(valid);
+            input.Ask();
+
+            valid.Received().Validate(answer);
         }
+
+        [Fact]
+        public void ShouldReRenderWhenInvalidAnswer()
+        {
+            var message = "Message";
+            var name = "Name";
+            var console = Substitute.For<IConsole>();
+            var valid = Substitute.For<IValidator>();
+            var consoleRender = Substitute.For<IConsoleRender>();
+            var input = new Input(name, message, consoleRender, console);
+            var answer = "Answer";
+
+            console.ReadLine().Returns(answer);
+            valid.Validate(answer).Returns(false, true);
+
+            input.SetValid(valid);
+            input.Ask();
+
+            consoleRender.Received(2).RenderMultipleMessages(Arg.Any<string[]>());
+        }
+
     }
 }
