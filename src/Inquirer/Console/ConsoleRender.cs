@@ -7,9 +7,9 @@ namespace InquirerCore.Prompts
     {
         private readonly IConsole console;
 
-        public ConsoleRender(IConsole console)
+        public ConsoleRender(IConsole console = null)
         {
-            this.console = console;
+            this.console = console ?? new ConsoleWrapper();
         }
 
         public void Clean(int initialPos, int endPos)

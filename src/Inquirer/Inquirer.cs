@@ -16,7 +16,7 @@ namespace InquirerCore
 
         public void Ask()
         {
-            Questions.ForEach((q) => q.Render());
+            Questions.ForEach((q) => q.Ask());
         }
 
         public string[] Answers()
