@@ -1,8 +1,5 @@
 ﻿using InquirerCore.Console;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace InquirerCore.Prompts
 {
@@ -22,7 +19,8 @@ namespace InquirerCore.Prompts
         {
             var pos = consoleRender.RenderMultipleMessages(GetQuestion());
             answer = Console.ReadLine();
-            while(!(Validator == null || Validator.Validate(answer))){
+            while (!IsValidAnswer(answer))
+            {
                 consoleRender.Clean(pos[0, 1], pos[1, 1]);
                 consoleRender.RenderMultipleMessages(GetQuestion());
                 answer = Console.ReadLine();

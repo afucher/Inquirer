@@ -21,7 +21,16 @@ namespace InquirerCore.Prompts
             this.Console = console ?? new ConsoleWrapper();
             this.consoleRender = consoleRender;
         }
+
         public void SetValid(IValidator validator) => Validator = validator;
+
+        public bool IsValidAnswer(string answer)
+        {
+            if (Validator == null) return true;
+
+            return Validator.Validate(answer);
+        }
+
         public abstract string[] GetQuestion();
         public abstract void Render();
         public abstract string Answer();

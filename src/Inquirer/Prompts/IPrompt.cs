@@ -12,5 +12,6 @@ namespace InquirerCore.Prompts
         string Answer();
         void Ask();
         void SetValid(IValidator validator);
+        bool IsValidAnswer(string answer);
     }
 }
