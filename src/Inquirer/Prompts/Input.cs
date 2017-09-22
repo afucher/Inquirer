@@ -6,7 +6,7 @@ namespace InquirerCore.Prompts
     public class Input : BasePrompt
     {
         private string answer;
-        public Input(string name, string message, IRender consoleRender, IConsole console = null) : base(name, message, consoleRender, console)
+        public Input(string name, string message, IScreenManager consoleRender, IConsole console = null) : base(name, message, consoleRender, console)
         {
         }
 

@@ -12,8 +12,8 @@ namespace Samples.Basic
         public static void Run()
         {
             var numbersOnly = new RegexValidator("^[0-9]*$");
-            var nameInput = new Input("name", "What is your name?", new ConsoleRender());
-            var ageInput = new Input("age", "What is your age?", new ConsoleRender());
+            var nameInput = new Input("name", "What is your name?", new ConsoleManager());
+            var ageInput = new Input("age", "What is your age?", new ConsoleManager());
             ageInput.SetValid(numbersOnly);
 
             var inquirer = new Inquirer(nameInput, ageInput);

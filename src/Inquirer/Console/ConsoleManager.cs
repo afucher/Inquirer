@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace InquirerCore.Prompts
 {
-    public class ConsoleRender : IRender
+    public class ConsoleManager : IScreenManager
     {
         private readonly IConsole console;
 
-        public ConsoleRender(IConsole console = null)
+        public ConsoleManager(IConsole console = null)
         {
             this.console = console ?? new ConsoleWrapper();
         }

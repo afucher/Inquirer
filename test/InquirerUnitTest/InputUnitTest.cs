@@ -17,7 +17,7 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender);
 
             input.message.Should().Be(message);
@@ -29,7 +29,7 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender);
 
             var question = input.GetQuestion();
@@ -44,7 +44,7 @@ namespace InquirerUnitTest
             var message = "Message";
             var name = "Name";
             var console = Substitute.For<IConsole>();
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender, console);
             input.Render();
 
@@ -58,7 +58,7 @@ namespace InquirerUnitTest
             var message = "Message";
             var name = "Name";
             var console = Substitute.For<IConsole>();
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
@@ -77,7 +77,7 @@ namespace InquirerUnitTest
             var name = "Name";
             var console = Substitute.For<IConsole>();
             var valid = Substitute.For<IValidator>();
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
@@ -97,7 +97,7 @@ namespace InquirerUnitTest
             var name = "Name";
             var console = Substitute.For<IConsole>();
             var valid = Substitute.For<IValidator>();
-            var consoleRender = Substitute.For<IRender>();
+            var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
