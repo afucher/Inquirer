@@ -14,5 +14,6 @@ namespace InquirerCore.Console
         int CursorLeft { get; set; }
         int CursorTop { get; set; }
         int WindowWidth { get; set; }
+        bool KeyAvailable { get; }
     }
 }

@@ -1,10 +1,26 @@
 ﻿using InquirerCore.Console;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace InquirerCore.Prompts
 {
     public class ConsoleManager : IScreenManager
     {
+        static IEnumerable<ConsoleKeyInfo> ConsoleInput
+        {
+            get
+            {
+                while (true)
+                {
+                    yield return System.Console.ReadKey();
+                }
+            }
+        }
         private readonly IConsole console;
 
         public ConsoleManager(IConsole console = null)
@@ -33,6 +49,41 @@ namespace InquirerCore.Prompts
             pos[1, 0] = console.CursorLeft;
             pos[1, 1] = console.CursorTop;
             return pos;
+        }
+
+        public string ReadLine()
+        {
+            var line = "";
+
+            var input = ConsoleInput.ToObservable();
+
+            var keyObservable = input
+                .Do(TrataKey);
+            var EnterObservable = keyObservable.Where(x => x.Key == ConsoleKey.Enter);
+            //.TakeWhile(x => x.Key != ConsoleKey.Enter)
+            var lineObservable = keyObservable
+                .TakeWhile(x => x.Key != ConsoleKey.Enter)
+                .Select(x => x.KeyChar.ToString())
+                .Scan((x, y) => x + y)
+                .TakeLast(1);
+
+
+            var subscriber = lineObservable.Subscribe(x => line = x);
+
+            return line;
+        }
+
+        private void TrataKey(ConsoleKeyInfo key)
+        {
+            if (key.Key == ConsoleKey.Backspace)
+            {
+                console.Write(" \b");
+            }
+
+            if (key.Key == ConsoleKey.Enter)
+            {
+                console.CursorTop++;
+            }
         }
     }
 }

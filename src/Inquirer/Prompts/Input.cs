@@ -18,12 +18,12 @@ namespace InquirerCore.Prompts
         public override void Ask()
         {
             var pos = consoleRender.RenderMultipleMessages(GetQuestion());
-            answer = Console.ReadLine();
+            answer = consoleRender.ReadLine();//Console.ReadLine();
             while (!IsValidAnswer(answer))
             {
                 consoleRender.Clean(pos[0, 1], pos[1, 1]);
                 consoleRender.RenderMultipleMessages(GetQuestion());
-                answer = Console.ReadLine();
+                answer = consoleRender.ReadLine();//Console.ReadLine();
             }
         }
 
