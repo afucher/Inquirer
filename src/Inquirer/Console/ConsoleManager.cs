@@ -64,8 +64,7 @@ namespace InquirerCore.Prompts
             var lineObservable = keyObservable
                 .TakeWhile(x => x.Key != ConsoleKey.Enter)
                 .Select(x => x.KeyChar.ToString())
-                .Scan((x, y) => x + y)
-                .TakeLast(1);
+                .Aggregate((x, y) => x + y);
 
 
             var subscriber = lineObservable.Subscribe(x => line = x);
