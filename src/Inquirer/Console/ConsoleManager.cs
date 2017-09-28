@@ -55,18 +55,19 @@ namespace InquirerCore.Prompts
         {
             var line = "";
 
-            var input = ConsoleInput.ToObservable();
+            var input = ConsoleInput.ToObservable()
+                                    .Publish()
+                                    .RefCount();
 
-            var keyObservable = input
-                .Do(TrataKey);
+            var keyObservable = input.Do(TrataKey);
+
             var EnterObservable = keyObservable.Where(x => x.Key == ConsoleKey.Enter);
-            //.TakeWhile(x => x.Key != ConsoleKey.Enter)
+
             var lineObservable = keyObservable
-                .TakeWhile(x => x.Key != ConsoleKey.Enter)
+                .TakeUntil(EnterObservable)
                 .Select(x => x.KeyChar.ToString())
                 .Aggregate((x, y) => x + y);
-
-
+            
             var subscriber = lineObservable.Subscribe(x => line = x);
 
             return line;

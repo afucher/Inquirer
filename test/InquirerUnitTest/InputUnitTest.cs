@@ -62,7 +62,7 @@ namespace InquirerUnitTest
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
-            console.ReadLine().Returns(answer);
+            consoleRender.ReadLine().Returns(answer);
 
             input.Ask();
 
@@ -81,7 +81,7 @@ namespace InquirerUnitTest
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
-            console.ReadLine().Returns(answer);
+            consoleRender.ReadLine().Returns(answer);
             valid.Validate(answer).Returns(true);
 
             input.SetValid(valid);
@@ -101,7 +101,7 @@ namespace InquirerUnitTest
             var input = new Input(name, message, consoleRender, console);
             var answer = "Answer";
 
-            console.ReadLine().Returns(answer);
+            consoleRender.ReadLine().Returns(answer);
             consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
             valid.Validate(answer).Returns(false, true);
 
