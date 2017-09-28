@@ -6,7 +6,7 @@ namespace InquirerCore.Prompts
     public class Input : BasePrompt
     {
         private string answer;
-        public Input(string name, string message, IScreenManager consoleRender, IConsole console = null) : base(name, message, consoleRender, console)
+        public Input(string name, string message, IScreenManager consoleRender) : base(name, message, consoleRender)
         {
         }
 
@@ -17,13 +17,13 @@ namespace InquirerCore.Prompts
 
         public override void Ask()
         {
-            var pos = consoleRender.RenderMultipleMessages(GetQuestion());
-            answer = consoleRender.ReadLine();//Console.ReadLine();
+            var pos = Render();
+            answer = consoleRender.ReadLine();
             while (!IsValidAnswer(answer))
             {
                 consoleRender.Clean(pos[0, 1], pos[1, 1]);
-                consoleRender.RenderMultipleMessages(GetQuestion());
-                answer = consoleRender.ReadLine();//Console.ReadLine();
+                Render();
+                answer = consoleRender.ReadLine();
             }
         }
 
@@ -32,9 +32,9 @@ namespace InquirerCore.Prompts
             return new string[] { message };
         }
 
-        public override void Render()
+        public override int[,] Render()
         {
-            GetQuestion().ToList().ForEach(line => Console.WriteLine(line));
+            return consoleRender.RenderMultipleMessages(GetQuestion());
         }
     }
 }

@@ -11,14 +11,12 @@ namespace InquirerCore.Prompts
         public string name { private set; get; }
         public string message { private set; get; }
         protected IValidator Validator;
-        protected IConsole Console;
         protected readonly IScreenManager consoleRender;
 
-        public BasePrompt(string name, string message, IScreenManager consoleRender, IConsole console = null)
+        public BasePrompt(string name, string message, IScreenManager consoleRender)
         {
             this.name = name;
             this.message = message;
-            this.Console = console ?? new ConsoleWrapper();
             this.consoleRender = consoleRender;
         }
 
@@ -32,7 +30,7 @@ namespace InquirerCore.Prompts
         }
 
         public abstract string[] GetQuestion();
-        public abstract void Render();
+        public abstract int[,] Render();
         public abstract string Answer();
         public abstract void Ask();
     }

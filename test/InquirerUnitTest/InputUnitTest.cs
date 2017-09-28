@@ -43,12 +43,11 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var console = Substitute.For<IConsole>();
             var consoleRender = Substitute.For<IScreenManager>();
-            var input = new Input(name, message, consoleRender, console);
+            var input = new Input(name, message, consoleRender);
             input.Render();
 
-            console.Received().WriteLine(message);
+            consoleRender.Received().RenderMultipleMessages(Arg.Any<string[]>());
         }
 
 
@@ -57,9 +56,8 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var console = Substitute.For<IConsole>();
             var consoleRender = Substitute.For<IScreenManager>();
-            var input = new Input(name, message, consoleRender, console);
+            var input = new Input(name, message, consoleRender);
             var answer = "Answer";
 
             consoleRender.ReadLine().Returns(answer);
@@ -75,10 +73,9 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var console = Substitute.For<IConsole>();
             var valid = Substitute.For<IValidator>();
             var consoleRender = Substitute.For<IScreenManager>();
-            var input = new Input(name, message, consoleRender, console);
+            var input = new Input(name, message, consoleRender);
             var answer = "Answer";
 
             consoleRender.ReadLine().Returns(answer);
@@ -95,10 +92,9 @@ namespace InquirerUnitTest
         {
             var message = "Message";
             var name = "Name";
-            var console = Substitute.For<IConsole>();
             var valid = Substitute.For<IValidator>();
             var consoleRender = Substitute.For<IScreenManager>();
-            var input = new Input(name, message, consoleRender, console);
+            var input = new Input(name, message, consoleRender);
             var answer = "Answer";
 
             consoleRender.ReadLine().Returns(answer);

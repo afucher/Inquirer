@@ -7,7 +7,7 @@ namespace InquirerCore.Prompts
 {
     public interface IPrompt
     {
-        void Render();
+        int[,] Render();
         string[] GetQuestion();
         string Answer();
         void Ask();

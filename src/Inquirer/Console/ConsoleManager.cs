@@ -11,21 +11,13 @@ namespace InquirerCore.Prompts
 {
     public class ConsoleManager : IScreenManager
     {
-        static IEnumerable<ConsoleKeyInfo> ConsoleInput
-        {
-            get
-            {
-                while (true)
-                {
-                    yield return System.Console.ReadKey();
-                }
-            }
-        }
         private readonly IConsole console;
+        private ConsoleObservable observable;
 
         public ConsoleManager(IConsole console = null)
         {
             this.console = console ?? new ConsoleWrapper();
+            observable = new ConsoleObservable(this.console);
         }
 
         public void Clean(int initialPos, int endPos)
@@ -54,36 +46,11 @@ namespace InquirerCore.Prompts
         public string ReadLine()
         {
             var line = "";
-
-            var input = ConsoleInput.ToObservable()
-                                    .Publish()
-                                    .RefCount();
-
-            var keyObservable = input.Do(TrataKey);
-
-            var EnterObservable = keyObservable.Where(x => x.Key == ConsoleKey.Enter);
-
-            var lineObservable = keyObservable
-                .TakeUntil(EnterObservable)
-                .Select(x => x.KeyChar.ToString())
-                .Aggregate((x, y) => x + y);
             
-            var subscriber = lineObservable.Subscribe(x => line = x);
+            var subscriber = observable.GetLineObservable().Subscribe(x => line = x);
 
             return line;
         }
 
-        private void TrataKey(ConsoleKeyInfo key)
-        {
-            if (key.Key == ConsoleKey.Backspace)
-            {
-                console.Write(" \b");
-            }
-
-            if (key.Key == ConsoleKey.Enter)
-            {
-                console.CursorTop++;
-            }
-        }
     }
 }
