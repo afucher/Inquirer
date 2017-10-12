@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>InquirerCore</RootNamespace>
-    <Version>0.0.2</Version>
+    <Version>0.0.5</Version>
     <Authors>Arthur Fücher</Authors>
     <Company />
     <Product />
