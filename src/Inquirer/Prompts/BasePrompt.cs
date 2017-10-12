@@ -13,11 +13,11 @@ namespace InquirerCore.Prompts
         protected IValidator Validator;
         protected readonly IScreenManager consoleRender;
 
-        public BasePrompt(string name, string message, IScreenManager consoleRender)
+        public BasePrompt(string name, string message, IScreenManager consoleRender = null)
         {
             this.name = name;
             this.message = message;
-            this.consoleRender = consoleRender;
+            this.consoleRender = consoleRender ?? new ConsoleManager();
         }
 
         public void SetValid(IValidator validator) => Validator = validator;
