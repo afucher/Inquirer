@@ -15,6 +15,16 @@ namespace InquirerCore.Console
             {
                 while (true)
                 {
+                    yield return console.ReadKey(false);
+                }
+            }
+        }
+        private IEnumerable<ConsoleKeyInfo> ConsoleInputIntercept
+        {
+            get
+            {
+                while (true)
+                {
                     yield return console.ReadKey(true);
                 }
             }
@@ -56,6 +66,15 @@ namespace InquirerCore.Console
             {
                 console.CursorTop++;
             }
+        }
+
+        public void Intercept(bool intercept)
+        {
+            var inputToUse = intercept ? ConsoleInputIntercept : ConsoleInput;
+            input = inputToUse.ToObservable()
+                              .Do(ImplementKeysBehaviours)
+                              .Publish()
+                              .RefCount();
         }
     }
 }

@@ -59,7 +59,7 @@ namespace InquirerUnitTest
             var message = "Message";
             var name = "Name";
             var consoleRender = Substitute.For<IScreenManager>();
-            var input = new ListInput(name, message, new string[] { }, consoleRender);
+            var input = new ListInput(name, message, new string[] { "option1", "option2" }, consoleRender);
             input.Render();
 
             consoleRender.Received().RenderMultipleMessages(Arg.Any<string[]>());

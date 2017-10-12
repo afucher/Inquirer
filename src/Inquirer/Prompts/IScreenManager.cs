@@ -8,6 +8,6 @@ namespace InquirerCore.Prompts
         int[,] RenderMultipleMessages(string[] mensagens);
         void Clean(int initialPos, int endPos);
         string ReadLine();
-        IInputObservable getInputObservable();
+        IInputObservable GetInputObservable();
     }
 }

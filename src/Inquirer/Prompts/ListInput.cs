@@ -23,7 +23,8 @@ namespace InquirerCore.Prompts
         public override void Ask()
         {
             var pos = Render();
-            var input = consoleRender.getInputObservable();
+            var input = consoleRender.GetInputObservable();
+            input.Intercept(true);
             input.KeyPress()
                 .TakeUntil(input.GetEnterObservable())
                 .Where(x => x.Key == ConsoleKey.UpArrow || x.Key == ConsoleKey.DownArrow)

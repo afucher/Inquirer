@@ -52,12 +52,7 @@ namespace InquirerCore.Prompts
             return line;
         }
 
-        public IObservable<ConsoleKeyInfo> KeyPress()
-        {
-            return observable.KeyPress();
-        }
-
-        public IInputObservable getInputObservable()
+        public IInputObservable GetInputObservable()
         {
             return observable;
         }

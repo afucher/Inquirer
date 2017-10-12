@@ -7,5 +7,6 @@ namespace InquirerCore.Console
         IObservable<ConsoleKeyInfo> GetEnterObservable();
         IObservable<ConsoleKeyInfo> KeyPress();
         IObservable<string> GetLineObservable();
+        void Intercept(bool intercept);
     }
 }

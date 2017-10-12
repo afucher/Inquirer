@@ -9,7 +9,7 @@ namespace Samples
     {
         static void Main(string[] args)
         {
-            Basic.Sample2.Run();
+            Basic.Sample1.Run();
         }
     }
 }
