@@ -15,7 +15,7 @@ namespace InquirerCore.Console
             {
                 while (true)
                 {
-                    yield return console.ReadKey();
+                    yield return console.ReadKey(true);
                 }
             }
         }
@@ -38,6 +38,11 @@ namespace InquirerCore.Console
             return input.TakeUntil(GetEnterObservable())
                         .Select(x => x.KeyChar.ToString())
                         .Aggregate((x, y) => x + y);
+        }
+
+        public IObservable<ConsoleKeyInfo> KeyPress()
+        {
+            return input;
         }
 
         private void ImplementKeysBehaviours(ConsoleKeyInfo key)
