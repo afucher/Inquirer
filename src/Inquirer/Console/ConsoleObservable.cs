@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace InquirerCore.Console
     public class ConsoleObservable : IInputObservable
     {
         private readonly IConsole console;
+        private IScheduler scheduler;
         private IObservable<ConsoleKeyInfo> input;
         private IEnumerable<ConsoleKeyInfo> ConsoleInput
         {
@@ -29,10 +31,11 @@ namespace InquirerCore.Console
                 }
             }
         }
-        public ConsoleObservable(IConsole console)
+        public ConsoleObservable(IConsole console, IScheduler scheduler = null)
         {
             this.console = console;
-            input = ConsoleInput.ToObservable()
+            this.scheduler = scheduler ?? Scheduler.Default;
+            input = ConsoleInput.ToObservable(this.scheduler)
                                 .Do(ImplementKeysBehaviours)
                                 .Publish()
                                 .RefCount();
@@ -71,7 +74,7 @@ namespace InquirerCore.Console
         public void Intercept(bool intercept)
         {
             var inputToUse = intercept ? ConsoleInputIntercept : ConsoleInput;
-            input = inputToUse.ToObservable()
+            input = inputToUse.ToObservable(this.scheduler)
                               .Do(ImplementKeysBehaviours)
                               .Publish()
                               .RefCount();
