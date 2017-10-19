@@ -34,7 +34,7 @@ namespace InquirerCore.Console
         public ConsoleObservable(IConsole console, IScheduler scheduler = null)
         {
             this.console = console;
-            this.scheduler = scheduler ?? Scheduler.Default;
+            this.scheduler = scheduler ?? CurrentThreadScheduler.Instance;
             input = ConsoleInput.ToObservable(this.scheduler)
                                 .Do(ImplementKeysBehaviours)
                                 .Publish()
@@ -74,7 +74,7 @@ namespace InquirerCore.Console
         public void Intercept(bool intercept)
         {
             var inputToUse = intercept ? ConsoleInputIntercept : ConsoleInput;
-            input = inputToUse.ToObservable(this.scheduler)
+            input = inputToUse.ToObservable(scheduler)
                               .Do(ImplementKeysBehaviours)
                               .Publish()
                               .RefCount();
