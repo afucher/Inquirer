@@ -49,7 +49,7 @@ namespace InquirerCore.Console
         public IObservable<string> GetLineObservable()
         {
             return input.TakeUntil(GetEnterObservable())
-                        .Where(IgnoreSpecialKeys)
+                        .Where(IsNormalKey)
                         .Select(x => x.KeyChar.ToString())
                         .Aggregate((x, y) => x + y);
         }
@@ -59,24 +59,28 @@ namespace InquirerCore.Console
             return input;
         }
 
-        private bool IgnoreSpecialKeys(ConsoleKeyInfo key)
+        public bool IsNormalKey(ConsoleKeyInfo key)
         {
-            if (!key.Modifiers.HasFlag(ConsoleModifiers.Shift))
-                return true;
-            return char.IsDigit(key.KeyChar);
+            var hasShift = key.Modifiers.HasFlag(ConsoleModifiers.Shift);
+            if (!hasShift) return true;
+
+            return !ConsoleUtils.isDigit(key.Key);
         }
 
-        private void ImplementKeysBehaviours(ConsoleKeyInfo key)
+        private void ImplementKeysBehaviours(ConsoleKeyInfo cki)
         {
-            if (key.Key == ConsoleKey.Backspace)
+            var key = cki.Key;
+            switch (key)
             {
-                console.Write(" \b");
-            }
-
-            if (key.Key == ConsoleKey.Enter)
-            {
-                console.CursorTop++;
-            }
+                case ConsoleKey.Backspace:
+                    console.Write(" \b");
+                    break;
+                case ConsoleKey.Enter:
+                    console.CursorTop++;
+                    break;
+            };
+            var hasShift = cki.Modifiers.HasFlag(ConsoleModifiers.Shift);
+            if (hasShift && ConsoleUtils.isDigit(key)) console.Write("\b");
         }
 
         public void Intercept(bool intercept)

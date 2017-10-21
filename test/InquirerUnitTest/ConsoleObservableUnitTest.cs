@@ -24,7 +24,7 @@ namespace InquirerUnitTest
             var consoleObservable = new ConsoleObservable(console, scheduler);
             var keys = ckiFactory.GetMultipleLetters("AB\n");
 
-            console.ReadKey(false).Returns(keys.First(), keys.Skip(1).ToArray() );
+            console.ReadKey(Arg.Any<bool>()).Returns(keys.First(), keys.Skip(1).ToArray() );
 
             consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
@@ -41,7 +41,7 @@ namespace InquirerUnitTest
             var consoleObservable = new ConsoleObservable(console, scheduler);
             var keys = ckiFactory.GetMultipleLetters("¨ü\n");
 
-            console.ReadKey(false).Returns(keys.First(), keys.Skip(1).ToArray() );
+            console.ReadKey(Arg.Any<bool>()).Returns(keys.First(), keys.Skip(1).ToArray() );
 
             consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
