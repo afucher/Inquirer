@@ -6,12 +6,14 @@ using NSubstitute;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using InquirerUnitTest.Helpers;
+using System.Linq;
 
 namespace InquirerUnitTest
 {
     public class ConsoleObservableUnitTest
     {
-
+        private ConsoleKeyInfoFactory ckiFactory = new ConsoleKeyInfoFactory();
         [Fact]
         public void LineObservableShouldReturnStringBeforeEnterKeyPress()
         {
@@ -20,10 +22,9 @@ namespace InquirerUnitTest
             var scheduler = new TestScheduler();
             var console = Substitute.For<IConsole>();
             var consoleObservable = new ConsoleObservable(console, scheduler);
-            var keyInfoA = new ConsoleKeyInfo('A', ConsoleKey.A,false, false, false);
-            var keyInfoB = new ConsoleKeyInfo('B', ConsoleKey.B, false, false, false);
-            var keyInfoEnter = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
-            console.ReadKey(false).Returns(keyInfoA, keyInfoB, keyInfoEnter);
+            var keys = ckiFactory.GetMultipleLetters("AB\n");
+
+            console.ReadKey(false).Returns(keys.First(), keys.Skip(1).ToArray() );
 
             consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
@@ -38,10 +39,9 @@ namespace InquirerUnitTest
             var scheduler = new TestScheduler();
             var console = Substitute.For<IConsole>();
             var consoleObservable = new ConsoleObservable(console, scheduler);
-            var keyInfoA = new ConsoleKeyInfo('\0', ConsoleKey.D6,true, false, false );
-            var keyInfoB = new ConsoleKeyInfo('ü', ConsoleKey.U, false, false, false);
-            var keyInfoEnter = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
-            console.ReadKey(false).Returns(keyInfoA, keyInfoB, keyInfoEnter);
+            var keys = ckiFactory.GetMultipleLetters("¨ü\n");
+
+            console.ReadKey(false).Returns(keys.First(), keys.Skip(1).ToArray() );
 
             consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
