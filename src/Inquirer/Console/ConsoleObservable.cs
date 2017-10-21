@@ -49,6 +49,7 @@ namespace InquirerCore.Console
         public IObservable<string> GetLineObservable()
         {
             return input.TakeUntil(GetEnterObservable())
+                        .Where(IgnoreSpecialKeys)
                         .Select(x => x.KeyChar.ToString())
                         .Aggregate((x, y) => x + y);
         }
@@ -56,6 +57,13 @@ namespace InquirerCore.Console
         public IObservable<ConsoleKeyInfo> KeyPress()
         {
             return input;
+        }
+
+        private bool IgnoreSpecialKeys(ConsoleKeyInfo key)
+        {
+            if (!key.Modifiers.HasFlag(ConsoleModifiers.Shift))
+                return true;
+            return char.IsDigit(key.KeyChar);
         }
 
         private void ImplementKeysBehaviours(ConsoleKeyInfo key)

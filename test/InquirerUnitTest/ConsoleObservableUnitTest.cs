@@ -15,6 +15,8 @@ namespace InquirerUnitTest
         [Fact]
         public void LineObservableShouldReturnStringBeforeEnterKeyPress()
         {
+            var line = "";
+            var expectedLine = "AB";
             var scheduler = new TestScheduler();
             var console = Substitute.For<IConsole>();
             var consoleObservable = new ConsoleObservable(console, scheduler);
@@ -23,8 +25,27 @@ namespace InquirerUnitTest
             var keyInfoEnter = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
             console.ReadKey(false).Returns(keyInfoA, keyInfoB, keyInfoEnter);
 
-            consoleObservable.GetLineObservable().Subscribe(x => x.Should().Be("AB"));
+            consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
+            line.Should().Be(expectedLine);
+        }
+
+        [Fact]
+        public void LineObservableShouldWorkWithShift()
+        {
+            var line = "";
+            var expectedLine = "ü";
+            var scheduler = new TestScheduler();
+            var console = Substitute.For<IConsole>();
+            var consoleObservable = new ConsoleObservable(console, scheduler);
+            var keyInfoA = new ConsoleKeyInfo('\0', ConsoleKey.D6,true, false, false );
+            var keyInfoB = new ConsoleKeyInfo('ü', ConsoleKey.U, false, false, false);
+            var keyInfoEnter = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
+            console.ReadKey(false).Returns(keyInfoA, keyInfoB, keyInfoEnter);
+
+            consoleObservable.GetLineObservable().Subscribe(x => line = x);
+            scheduler.Start();
+            line.Should().Be(expectedLine);
         }
 
     }

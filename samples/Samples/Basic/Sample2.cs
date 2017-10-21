@@ -18,7 +18,8 @@ namespace Samples.Basic
 
             inquirer.Ask();
 
-            System.Console.WriteLine($@"You have selected option: {listInput.Answer()}");
+            var answer = listInput.Answer();
+            System.Console.WriteLine($@"You have selected option: {answer} - {options[Int32.Parse(answer)-1]}");
             System.Console.ReadKey();
         }
     }
