@@ -1,5 +1,7 @@
 # Inquirer
 
+![.NET Core](https://github.com/afucher/Inquirer/workflows/testing/badge.svg)
+
 A collection of common interactive command line user interfaces in C#.
 
 ## Running the tests
