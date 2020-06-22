@@ -21,6 +21,7 @@ namespace InquirerCore.Prompts
             answer = consoleRender.ReadLine();
             while (!IsValidAnswer(answer))
             {
+                answer = "";
                 consoleRender.Clean(pos[0, 1], pos[1, 1]);
                 Render();
                 answer = consoleRender.ReadLine();
