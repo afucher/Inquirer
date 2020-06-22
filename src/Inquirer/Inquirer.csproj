@@ -12,6 +12,7 @@
     <PackageProjectUrl>https://github.com/afucher/Inquirer</PackageProjectUrl>
     <RepositoryUrl>https://github.com/afucher/Inquirer/</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

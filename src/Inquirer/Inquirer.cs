@@ -8,15 +8,15 @@ namespace InquirerCore
 {
     public class Inquirer
     {
-        public List<IPrompt> Questions { get; private set; }
+        public List<IPrompt> Questions { get; }
         public Inquirer(params IPrompt[] questions)
         {
-            Questions = questions.ToList<IPrompt>();
+            Questions = questions.ToList();
         }
 
         public void Ask()
         {
-            Questions.ForEach((q) => q.Ask());
+            Questions.ForEach(q => q.Ask());
         }
 
         public string[] Answers()
