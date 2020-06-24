@@ -18,16 +18,9 @@ namespace InquirerUnitTest
             var inputNumber = new InputNumber(name, message, consoleRender);
             var aString = "Answer";
             
-            Task.Run(() =>
-            {
-                consoleRender.ReadLine().Returns(aString);
-                consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
+            var valid = inputNumber.IsValidAnswer(aString);
 
-                inputNumber.Ask();
-            });
-            Task.Delay(TimeSpan.FromMilliseconds(500)).Wait();
-            
-            inputNumber.Answer().Should().BeEmpty();
+            valid.Should().BeFalse();
         }
         
         [Fact]
@@ -38,17 +31,10 @@ namespace InquirerUnitTest
             var consoleRender = Substitute.For<IScreenManager>();
             var inputNumber = new InputNumber(name, message, consoleRender);
             var aNegativeNumeric = "-94";
-            Task.Run(() =>
-            {
-                consoleRender.ReadLine().Returns(aNegativeNumeric);
-                consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
+           
+            var valid = inputNumber.IsValidAnswer(aNegativeNumeric);
 
-                inputNumber.Ask();
-            });
-            Task.Delay(TimeSpan.FromMilliseconds(500)).Wait();
-            inputNumber.Answer().Should().Be(aNegativeNumeric);
-
-
+            valid.Should().BeTrue();
         }
     }
 }
