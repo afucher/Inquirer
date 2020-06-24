@@ -17,6 +17,8 @@ namespace InquirerUnitTest.Helpers
                     return new ConsoleKeyInfo('B', ConsoleKey.B, false, false, false);
                 case '\n':
                     return new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
+                case '\b':
+                    return new ConsoleKeyInfo('\b', ConsoleKey.Backspace, false, false, false);
                 case '¨':
                     return new ConsoleKeyInfo('\0', ConsoleKey.D6, true, false, false);
                 case 'ü':

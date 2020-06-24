@@ -50,8 +50,15 @@ namespace InquirerCore.Console
         {
             return input.TakeUntil(GetEnterObservable())
                         .Where(IsNormalKey)
-                        .Select(x => x.KeyChar.ToString())
-                        .Aggregate((x, y) => x + y);
+                        .Aggregate("", BuildLine);
+        }
+
+        private string BuildLine(string content, ConsoleKeyInfo newKey)
+        {
+            if (newKey.Key == ConsoleKey.Backspace)
+                return content == "" ? content : content.Remove(content.Length-1);
+            
+            return content + newKey.KeyChar;
         }
 
         public IObservable<ConsoleKeyInfo> KeyPress()
