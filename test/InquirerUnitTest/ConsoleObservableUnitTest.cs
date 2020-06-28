@@ -4,7 +4,6 @@ using FluentAssertions;
 using InquirerCore.Console;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
 using InquirerUnitTest.Helpers;
 using System.Linq;
@@ -80,6 +79,42 @@ namespace InquirerUnitTest
             consoleObservable.GetLineObservable().Subscribe(x => line = x);
             scheduler.Start();
             line.Should().Be(expectedLine);
+        }
+
+        [Fact]
+        public void EnterShouldAlwaysGoToLeft0()
+        {
+            var console = Substitute.For<IConsole>();
+            var scheduler = new TestScheduler();
+
+            console.ReadKey(Arg.Any<bool>()).Returns(ckiFactory.Get('A'), ckiFactory.Get('\n'));
+            
+            var consoleObservable = new ConsoleObservable(console, scheduler);
+            
+            consoleObservable.Intercept(true);
+            consoleObservable.KeyPress().Take(2).Subscribe();
+
+            scheduler.Start();
+
+            console.Received().CursorLeft = 0;
+        }
+        
+        [Fact]
+        public void ShouldNotGoToLeft0_WhenEnterWasNotPressed()
+        {
+            var console = Substitute.For<IConsole>();
+            var scheduler = new TestScheduler();
+
+            console.ReadKey(Arg.Any<bool>()).Returns(ckiFactory.Get('A'), ckiFactory.Get('B'));
+            
+            var consoleObservable = new ConsoleObservable(console, scheduler);
+            
+            consoleObservable.Intercept(true);
+            consoleObservable.KeyPress().Take(2).Subscribe();
+
+            scheduler.Start();
+
+            console.DidNotReceive().CursorLeft = 0;
         }
 
     }

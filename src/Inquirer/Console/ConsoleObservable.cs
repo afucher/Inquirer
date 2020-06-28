@@ -89,6 +89,7 @@ namespace InquirerCore.Console
                     break;
                 case ConsoleKey.Enter:
                     console.CursorTop++;
+                    console.CursorLeft = 0;
                     break;
             };
             var hasShift = cki.Modifiers.HasFlag(ConsoleModifiers.Shift);
