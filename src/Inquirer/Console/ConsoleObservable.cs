@@ -53,6 +53,11 @@ namespace InquirerCore.Console
                         .Aggregate("", BuildLine);
         }
 
+        public IObservable<ConsoleKeyInfo> TakeUntilEnter()
+        {
+            return input.TakeUntil(GetEnterObservable());
+        }
+
         private string BuildLine(string content, ConsoleKeyInfo newKey)
         {
             if (newKey.Key == ConsoleKey.Backspace)
