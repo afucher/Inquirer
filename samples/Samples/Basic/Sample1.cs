@@ -1,9 +1,6 @@
 ﻿using InquirerCore;
 using InquirerCore.Prompts;
 using InquirerCore.Validators;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Samples.Basic
 {
@@ -16,11 +13,14 @@ namespace Samples.Basic
             var ageInput = new Input("age", "What is your age?");
             ageInput.SetValid(numbersOnly);
 
-            var inquirer = new Inquirer(nameInput, ageInput);
+            var passwordInput = new PasswordInput("password", "What is the password?");
+            
+            var inquirer = new Inquirer(nameInput, ageInput, passwordInput);
 
             inquirer.Ask();
 
             System.Console.WriteLine($@"Hello {nameInput.Answer()}! Your age is {ageInput.Answer()}");
+            System.Console.WriteLine($@"Secret password: {passwordInput.Answer()}!");
             System.Console.ReadKey();
         }
     }
