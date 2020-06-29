@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive.Linq;
 using System.Text;
 
 namespace InquirerCore.Prompts
@@ -36,6 +35,7 @@ namespace InquirerCore.Prompts
                 {
                     _answer = answer.ToString();
                 });
+            consoleRender.Newline();
         }
 
         public override int[,] Render()

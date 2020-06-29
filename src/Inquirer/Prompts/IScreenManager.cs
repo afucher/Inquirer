@@ -1,5 +1,4 @@
 ﻿using InquirerCore.Console;
-using System;
 
 namespace InquirerCore.Prompts
 {
@@ -9,5 +8,6 @@ namespace InquirerCore.Prompts
         void Clean(int initialPos, int endPos);
         string ReadLine();
         IInputObservable GetInputObservable();
+        void Newline();
     }
 }

@@ -1,7 +1,4 @@
-﻿using InquirerCore.Console;
-using System.Linq;
-
-namespace InquirerCore.Prompts
+﻿namespace InquirerCore.Prompts
 {
     public class Input : BasePrompt
     {
@@ -26,11 +23,12 @@ namespace InquirerCore.Prompts
                 Render();
                 answer = consoleRender.ReadLine();
             }
+            consoleRender.Newline();
         }
 
         public override string[] GetQuestion()
         {
-            return new string[] { message };
+            return new[] { message };
         }
 
         public override int[,] Render()

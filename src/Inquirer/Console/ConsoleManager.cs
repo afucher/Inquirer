@@ -1,13 +1,8 @@
-﻿using InquirerCore.Console;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
+using InquirerCore.Prompts;
 
-namespace InquirerCore.Prompts
+namespace InquirerCore.Console
 {
     public class ConsoleManager : IScreenManager
     {
@@ -22,13 +17,16 @@ namespace InquirerCore.Prompts
 
         public void Clean(int initialPos, int endPos)
         {
-            for(var pos = initialPos; pos <= endPos; pos++)
+            console.CursorLeft = 0;
+            console.Write(new string(' ', console.WindowWidth-1));
+            for (var lineNumbers= endPos - initialPos; lineNumbers > 0; lineNumbers--)
             {
-                console.CursorTop = pos;
+                if (console.CursorTop == 0) break;
+
+                console.CursorTop--; 
                 console.CursorLeft = 0;
-                console.Write(new string(' ', console.WindowWidth));
+                console.Write(new string(' ', console.WindowWidth-1));
             }
-            console.CursorTop = initialPos;
             console.CursorLeft = 0;
         }
 
@@ -39,7 +37,7 @@ namespace InquirerCore.Prompts
             pos[0,1] = console.CursorTop;
             mensagens.ToList().ForEach(mensagem => console.WriteLine(mensagem));
             pos[1, 0] = console.CursorLeft;
-            pos[1, 1] = console.CursorTop;
+            pos[1, 1] = pos[0,1] + mensagens.Length;
             return pos;
         }
 
@@ -55,6 +53,11 @@ namespace InquirerCore.Prompts
         public IInputObservable GetInputObservable()
         {
             return observable;
+        }
+
+        public void Newline()
+        {
+            console.Write(Environment.NewLine);
         }
     }
 }
