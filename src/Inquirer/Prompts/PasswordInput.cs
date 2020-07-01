@@ -22,27 +22,38 @@ namespace InquirerCore.Prompts
 
         public override void Ask()
         {
+            //Create variable for position
             int[,] pos = null;
+            //Validation loop
             do
             {
+                //Clean console
                 if(pos != null)
                     consoleRender.Clean(pos[0, 1], pos[1, 1]);
+                //Render question
                 pos = Render();
-                var answer = new StringBuilder();
-                var input = consoleRender.GetInputObservable();
-                input.Intercept(true);
-                input.TakeUntilEnter()
-                    .Subscribe(x =>
-                    {
-                        answer.Append(x.KeyChar);
-                        System.Console.Write('*');
-                    }, () =>
-                    {
-                        _answer = answer.ToString();
-                    });
+                //Get user answer  !!!!
+                _answer = GetUserAnswer();
+                
             } while (!IsValidAnswer(_answer));
             
+            //Add new line
             consoleRender.Newline();
+        }
+
+        private string GetUserAnswer()
+        {
+            var answer = new StringBuilder();
+            var input = consoleRender.GetInputObservable();
+            input.Intercept(true);
+            input.TakeUntilEnter()
+                .Subscribe(x =>
+                {
+                    answer.Append(x.KeyChar);
+                    System.Console.Write('*');
+                });
+
+            return answer.ToString();
         }
 
         public override int[,] Render()

@@ -14,19 +14,28 @@
 
         public override void Ask()
         {
+            //Create variable for position
             int[,] pos = null;
-
+            //Validation loop
             do
             {
+                //Clean console
                 if(pos != null)
                     consoleRender.Clean(pos[0, 1], pos[1, 1]);
+                //Render question
                 pos = Render();
-                _answer = "";
-                _answer = consoleRender.ReadLine();
-                
+                //Get user answer  !!!!
+                _answer = GetUserAnswer();
+
             } while (!IsValidAnswer(_answer));
             
+            //Add new line
             consoleRender.Newline();
+        }
+        
+        private string GetUserAnswer()
+        {
+           return consoleRender.ReadLine();
         }
 
         public override string[] GetQuestion()
