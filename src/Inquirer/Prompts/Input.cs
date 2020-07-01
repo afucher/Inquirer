@@ -2,27 +2,30 @@
 {
     public class Input : BasePrompt
     {
-        private string answer;
+        private string _answer;
         public Input(string name, string message, IScreenManager consoleRender = null) : base(name, message, consoleRender)
         {
         }
 
         public override string Answer()
         {
-            return answer;
+            return _answer;
         }
 
         public override void Ask()
         {
-            var pos = Render();
-            answer = consoleRender.ReadLine();
-            while (!IsValidAnswer(answer))
+            int[,] pos = null;
+
+            do
             {
-                answer = "";
-                consoleRender.Clean(pos[0, 1], pos[1, 1]);
-                Render();
-                answer = consoleRender.ReadLine();
-            }
+                if(pos != null)
+                    consoleRender.Clean(pos[0, 1], pos[1, 1]);
+                pos = Render();
+                _answer = "";
+                _answer = consoleRender.ReadLine();
+                
+            } while (!IsValidAnswer(_answer));
+            
             consoleRender.Newline();
         }
 
