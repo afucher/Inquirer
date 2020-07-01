@@ -34,9 +34,9 @@ namespace InquirerUnitTest
 
             consoleRender.ReadLine().Returns(answer);
 
-            input.Ask();
+            var isValid = input.IsValidAnswer(answer);
 
-            input.Answer().Should().Be(answer);
+            isValid.Should().BeTrue();
         }
         
         
@@ -54,19 +54,10 @@ namespace InquirerUnitTest
             var name = "Name";
             var consoleRender = Substitute.For<IScreenManager>();
             var input = new InputConfirmation(name, message, consoleRender);
-            var askHasFinished = false;
 
-            Task.Run(() =>
-            {
-                consoleRender.ReadLine().Returns(answer);
-                consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
+            var isValid = input.IsValidAnswer(answer);
 
-                input.Ask();
-                askHasFinished = true;
-            });
-            Task.Delay(TimeSpan.FromMilliseconds(100)).Wait();
-
-            askHasFinished.Should().BeFalse();
+            isValid.Should().BeFalse();
         }
     }
 }
