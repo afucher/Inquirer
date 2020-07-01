@@ -22,19 +22,26 @@ namespace InquirerCore.Prompts
 
         public override void Ask()
         {
-            var pos = Render();
-            var answer = new StringBuilder();
-            var input = consoleRender.GetInputObservable();
-            input.Intercept(true);
-            input.TakeUntilEnter()
-                .Subscribe(x =>
-                {
-                    answer.Append(x.KeyChar);
-                    System.Console.Write('*');
-                }, () =>
-                {
-                    _answer = answer.ToString();
-                });
+            int[,] pos = null;
+            do
+            {
+                if(pos != null)
+                    consoleRender.Clean(pos[0, 1], pos[1, 1]);
+                pos = Render();
+                var answer = new StringBuilder();
+                var input = consoleRender.GetInputObservable();
+                input.Intercept(true);
+                input.TakeUntilEnter()
+                    .Subscribe(x =>
+                    {
+                        answer.Append(x.KeyChar);
+                        System.Console.Write('*');
+                    }, () =>
+                    {
+                        _answer = answer.ToString();
+                    });
+            } while (!IsValidAnswer(_answer));
+            
             consoleRender.Newline();
         }
 
