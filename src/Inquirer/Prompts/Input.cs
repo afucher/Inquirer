@@ -33,7 +33,7 @@
             consoleRender.Newline();
         }
         
-        private string GetUserAnswer()
+        protected virtual string GetUserAnswer()
         {
            return consoleRender.ReadLine();
         }
