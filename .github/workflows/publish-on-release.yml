@@ -18,9 +18,9 @@ jobs:
           dotnet-version: 3.1.101
 
       - name: publish on version change
-          id: publish_nuget
-          uses: rohith/publish-nuget@v2
-          with:
-            PROJECT_FILE_PATH: src/Inquirer/Inquirer.csproj
-            PACKAGE_NAME: Inquirer
-            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Inquirer/Inquirer.csproj
+          PACKAGE_NAME: Inquirer
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
