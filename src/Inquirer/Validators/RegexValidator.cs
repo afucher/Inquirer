@@ -15,8 +15,7 @@ namespace InquirerCore.Validators
 
         public bool Validate(string value)
         {
-            var teste = Regex.IsMatch(value, pattern);
-            return teste;
+            return Regex.IsMatch(value, pattern);
         }
     }
 }
