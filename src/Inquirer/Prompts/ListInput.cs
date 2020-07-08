@@ -22,7 +22,7 @@ namespace InquirerCore.Prompts
 
         public override void Ask()
         {
-            var pos = Render();
+            var pos = RenderNew();
             var input = consoleRender.GetInputObservable();
             input.Intercept(true);
             input.KeyPress()
@@ -38,8 +38,8 @@ namespace InquirerCore.Prompts
                     {
                         if (selectedOption < options.Length - 1) selectedOption++;
                     };
-                    consoleRender.Clean(pos[0, 1], pos[1, 1]);
-                    Render();
+                    consoleRender.Clean(0, pos[0]);
+                    pos = RenderNew();
                 });
             answer = (selectedOption+1).ToString();
         }
@@ -58,6 +58,11 @@ namespace InquirerCore.Prompts
         public override int[,] Render()
         {
             return consoleRender.RenderMultipleMessages(GetQuestion());
+        }
+
+        public int[] RenderNew()
+        {
+            return consoleRender.Render(GetQuestion(), new string[] {});
         }
     }
 }
