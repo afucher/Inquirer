@@ -14,13 +14,13 @@
 
         public override void Ask()
         {
-            int[,] pos = null;
+            int[] pos = null;
             do
             {
                 if(pos != null)
-                    consoleRender.Clean(pos[0, 1], pos[1, 1]);
+                    consoleRender.Clean(0, pos[0]);
 
-                pos = Render();
+                pos = RenderNew();
 
                 _answer = GetUserAnswer();
 
@@ -42,6 +42,11 @@
         public override int[,] Render()
         {
             return consoleRender.RenderMultipleMessages(GetQuestion());
+        }
+        
+        public int[] RenderNew()
+        {
+            return consoleRender.Render(GetQuestion(), new string[]{});
         }
     }
 }

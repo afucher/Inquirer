@@ -1,10 +1,12 @@
-﻿using InquirerCore.Console;
+﻿using System.ComponentModel.Design;
+using InquirerCore.Console;
 
 namespace InquirerCore.Prompts
 {
     public interface IScreenManager
     {
-        int[,] RenderMultipleMessages(string[] mensagens);
+        int[,] RenderMultipleMessages(string[] messages);
+        int[] Render(string[] content, string[] bottomContent);
         void Clean(int initialPos, int endPos);
         string ReadLine();
         IInputObservable GetInputObservable();

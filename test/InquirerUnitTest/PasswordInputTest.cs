@@ -78,7 +78,7 @@ namespace InquirerUnitTest
             var consoleRender = Substitute.For<IScreenManager>();
             var inputObservable = Substitute.For<IInputObservable>();
             ConsoleKeyInfo[] keys = ckiFactory.GetMultipleLetters("A");
-            consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2,2]);
+            consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
             inputObservable.TakeUntilEnter().Returns(keys.ToObservable(), ckiFactory.GetMultipleLetters("B").ToObservable());
             consoleRender.GetInputObservable().Returns(inputObservable);
             var input = new PasswordInput("Name", "Message", consoleRender);
@@ -101,15 +101,15 @@ namespace InquirerUnitTest
             
             inputObservable.TakeUntilEnter().Returns(keys.ToObservable(), ckiFactory.GetMultipleLetters("B").ToObservable());
             consoleRender.GetInputObservable().Returns(inputObservable);
-            consoleRender.RenderMultipleMessages(Arg.Is<string[]>(
-                    m => m.SequenceEqual(new[] {"Message"})))
-                .Returns(new[,] {{1, 2}, {3, 4}});
+            consoleRender.Render(Arg.Is<string[]>(
+                    m => m.SequenceEqual(new[] {"Message"})),Arg.Any<string[]>())
+                .Returns(new[] {3, 0});
             var input = new PasswordInput("Name", "Message", consoleRender);
             input.SetValid(validator);
             
             input.Ask();
 
-            consoleRender.Received().Clean(2, 4);
+            consoleRender.Received().Clean(0, 3);
         }
     }
 }

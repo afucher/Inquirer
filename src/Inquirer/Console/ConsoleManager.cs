@@ -15,6 +15,16 @@ namespace InquirerCore.Console
             observable = new ConsoleObservable(this.console);
         }
 
+        public int[] Render(string[] content, string[] bottomContent)
+        {
+            content.ToList().ForEach(message => console.WriteLine(message));
+            Newline();
+            bottomContent.ToList().ForEach(message => console.WriteLine(message));
+            console.CursorTop = console.CursorTop - (bottomContent.Length + 1);
+            return new [] { content.Length, bottomContent.Length };
+        }
+
+
         public void Clean(int initialPos, int endPos)
         {
             console.CursorLeft = 0;

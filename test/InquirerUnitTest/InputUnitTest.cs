@@ -98,13 +98,13 @@ namespace InquirerUnitTest
             var answer = "Answer";
 
             consoleRender.ReadLine().Returns(answer);
-            consoleRender.RenderMultipleMessages(Arg.Any<string[]>()).Returns(new int[2, 2]);
+            consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
             valid.Validate(answer).Returns(false, true);
 
             input.SetValid(valid);
             input.Ask();
 
-            consoleRender.Received(2).RenderMultipleMessages(Arg.Any<string[]>());
+            consoleRender.Received(2).Render(Arg.Any<string[]>(),Arg.Any<string[]>());
         }
 
     }
