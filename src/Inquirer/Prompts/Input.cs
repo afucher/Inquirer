@@ -1,8 +1,11 @@
-﻿namespace InquirerCore.Prompts
+﻿using System.Collections.Generic;
+
+namespace InquirerCore.Prompts
 {
     public class Input : BasePrompt
     {
         private string _answer;
+        private bool _isValid = true;
         public Input(string name, string message, IScreenManager consoleRender = null) : base(name, message, consoleRender)
         {
         }
@@ -24,9 +27,12 @@
 
                 _answer = GetUserAnswer();
 
-            } while (!IsValidAnswer(_answer));
+                _isValid = IsValidAnswer(_answer);
+
+            } while (!_isValid);
             
             consoleRender.Newline();
+            consoleRender.Clean(0,0);
         }
         
         protected virtual string GetUserAnswer()
@@ -41,7 +47,10 @@
 
         public override int[] Render()
         {
-            return consoleRender.Render(GetQuestion(), new string[]{});
+            var bottomContent = new List<string>();
+            if(!_isValid) bottomContent.Add("Invalid input. Please answer again");
+            
+            return consoleRender.Render(GetQuestion(), bottomContent.ToArray());
         }
     }
 }

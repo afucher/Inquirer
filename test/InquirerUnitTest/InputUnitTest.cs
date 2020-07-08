@@ -3,6 +3,7 @@ using FluentAssertions;
 using InquirerCore.Prompts;
 using System;
 using System.IO;
+using System.Linq;
 using Xunit;
 using NSubstitute;
 using InquirerCore.Console;
@@ -105,6 +106,46 @@ namespace InquirerUnitTest
             input.Ask();
 
             consoleRender.Received(2).Render(Arg.Any<string[]>(),Arg.Any<string[]>());
+        }
+
+        [Fact]
+        public void ShouldShowErrorMessage_WhenUserAnswerIsInvalid()
+        {
+            var errorMessage = "Invalid input. Please answer again";
+            var valid = Substitute.For<IValidator>();
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new Input("Name", "Message", consoleRender);
+            var answer = "Answer";
+
+            consoleRender.ReadLine().Returns(answer);
+            consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
+            valid.Validate(answer).Returns(false, true);
+
+            input.SetValid(valid);
+            input.Ask();
+
+            consoleRender.Received().Render(Arg.Any<string[]>(),Arg.Is<string[]>(messages => messages.Length == 0));
+            consoleRender.Received().Render(Arg.Any<string[]>(),Arg.Is<string[]>(messages => messages.SequenceEqual(new []{errorMessage})));
+        }
+
+        [Fact]
+        public void ShouldEraseNewLineAfterUserAnswerCorrectly()
+        {
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new Input("Name", "Message", consoleRender);
+            var answer = "Answer";
+
+            consoleRender.ReadLine().Returns(answer);
+            consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
+            
+            input.Ask();
+
+            Received.InOrder(() =>
+            {
+                consoleRender.Newline();
+                consoleRender.Clean(0,0);
+            });
+
         }
 
     }
