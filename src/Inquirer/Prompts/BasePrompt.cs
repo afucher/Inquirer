@@ -30,7 +30,7 @@ namespace InquirerCore.Prompts
         }
 
         public abstract string[] GetQuestion();
-        public abstract int[,] Render();
+        public abstract int[] Render();
         public abstract string Answer();
         public abstract void Ask();
     }

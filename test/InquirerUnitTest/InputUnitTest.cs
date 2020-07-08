@@ -47,7 +47,7 @@ namespace InquirerUnitTest
             var input = new Input(name, message, consoleRender);
             input.Render();
 
-            consoleRender.Received().RenderMultipleMessages(Arg.Any<string[]>());
+            consoleRender.Received().Render(Arg.Any<string[]>(), Arg.Any<string[]>());
         }
 
 

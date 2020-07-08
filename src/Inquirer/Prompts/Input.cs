@@ -20,7 +20,7 @@
                 if(pos != null)
                     consoleRender.Clean(0, pos[0]);
 
-                pos = RenderNew();
+                pos = Render();
 
                 _answer = GetUserAnswer();
 
@@ -39,12 +39,7 @@
             return new[] { message };
         }
 
-        public override int[,] Render()
-        {
-            return consoleRender.RenderMultipleMessages(GetQuestion());
-        }
-        
-        public int[] RenderNew()
+        public override int[] Render()
         {
             return consoleRender.Render(GetQuestion(), new string[]{});
         }
