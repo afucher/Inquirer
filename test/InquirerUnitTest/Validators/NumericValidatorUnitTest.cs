@@ -34,5 +34,13 @@ namespace InquirerUnitTest.Validators
 
             isValid.Should().BeFalse();
         }
+        
+        [Fact]
+        public void ShouldReturnErrorMessage()
+        {
+            var validator = new NumericValidator();
+
+            validator.GetErrorMessage().Should().Be("Answer accepts only numbers.");
+        }
     }
 }

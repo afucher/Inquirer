@@ -109,9 +109,9 @@ namespace InquirerUnitTest
         }
 
         [Fact]
-        public void ShouldShowErrorMessage_WhenUserAnswerIsInvalid()
+        public void ShouldShowErrorMessageFromValidator_WhenUserAnswerIsInvalid()
         {
-            var errorMessage = "Invalid input. Please answer again";
+            var errorMessage = "Error message from validator";
             var valid = Substitute.For<IValidator>();
             var consoleRender = Substitute.For<IScreenManager>();
             var input = new Input("Name", "Message", consoleRender);
@@ -120,6 +120,7 @@ namespace InquirerUnitTest
             consoleRender.ReadLine().Returns(answer);
             consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
             valid.Validate(answer).Returns(false, true);
+            valid.GetErrorMessage().Returns(errorMessage);
 
             input.SetValid(valid);
             input.Ask();

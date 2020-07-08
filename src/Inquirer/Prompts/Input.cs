@@ -48,7 +48,7 @@ namespace InquirerCore.Prompts
         public override int[] Render()
         {
             var bottomContent = new List<string>();
-            if(!_isValid) bottomContent.Add("Invalid input. Please answer again");
+            if(!_isValid) bottomContent.Add(Validator.GetErrorMessage());
             
             return consoleRender.Render(GetQuestion(), bottomContent.ToArray());
         }

@@ -25,6 +25,14 @@ namespace InquirerUnitTest.Validators
 
             isValid.Should().BeFalse();
         }
+
+        [Fact]
+        public void ShouldReturnErrorMessage()
+        {
+            var validator = new RegexValidator("[a]");
+
+            validator.GetErrorMessage().Should().Be("Answer should match pattern [a]");
+        }
         
     }
 }

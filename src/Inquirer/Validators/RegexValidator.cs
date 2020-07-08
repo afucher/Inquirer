@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InquirerCore.Validators
@@ -16,6 +14,11 @@ namespace InquirerCore.Validators
         public bool Validate(string value)
         {
             return Regex.IsMatch(value, pattern);
+        }
+
+        public string GetErrorMessage()
+        {
+            return $"Answer should match pattern {pattern}";
         }
     }
 }

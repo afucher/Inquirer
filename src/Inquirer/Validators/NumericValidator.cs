@@ -16,5 +16,10 @@ namespace InquirerCore.Validators
                 return false;
             }
         }
+
+        public string GetErrorMessage()
+        {
+            return "Answer accepts only numbers.";
+        }
     }
 }
