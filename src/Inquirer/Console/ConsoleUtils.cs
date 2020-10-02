@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace InquirerCore.Console
 {
     public static class ConsoleUtils
     {
-        public static ConsoleKey[] DigitsKeys = new ConsoleKey[]{ ConsoleKey.D0,
+        //Made this private since it is only used in this class
+        private static ConsoleKey[] DigitsKeys = new ConsoleKey[]{ ConsoleKey.D0,
                                                                 ConsoleKey.D1,
                                                                 ConsoleKey.D2,
                                                                 ConsoleKey.D3,
@@ -19,7 +18,10 @@ namespace InquirerCore.Console
                                                                 ConsoleKey.D9 };
         public static bool isDigit(ConsoleKey key)
         {
-            return DigitsKeys.Contains(key);
+            //Update Oct 1, 2020
+            //If the digit is D2 (@ special character) then it will go back one character and the next will replace it
+            //Adding a condition to avoid this and include the @ special character
+            return (key != ConsoleKey.D2) && DigitsKeys.Contains(key);
         }
     }
 }
