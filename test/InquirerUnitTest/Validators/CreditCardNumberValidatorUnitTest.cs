@@ -4,7 +4,7 @@ using Xunit;
 
 namespace InquirerUnitTest
 {
-    public class CreditCardValidatorUnitTest
+    public class CreditCardNumberValidatorUnitTest
     {
         [Theory]
         [InlineData("1111-2222-3333-4444")]
@@ -14,7 +14,7 @@ namespace InquirerUnitTest
 
         public void ShouldAcceptValidCreditCard(string validCreditCard)
         {
-            var validator = new CreditCardValidator();
+            var validator = new CreditCardNumberValidator();
 
             var isValid = validator.Validate(validCreditCard);
 
@@ -31,7 +31,7 @@ namespace InquirerUnitTest
         [InlineData("asdfghjkl;qwerty")]
         public void ShouldNotAcceptInvalidCreditCard(string validCreditCard)
         {
-            var validator = new CreditCardValidator();
+            var validator = new CreditCardNumberValidator();
 
             var isValid = validator.Validate(validCreditCard);
 
@@ -41,7 +41,7 @@ namespace InquirerUnitTest
         [Fact]
         public void ShouldReturnErrorMessage()
         {
-            var validator = new CreditCardValidator();
+            var validator = new CreditCardNumberValidator();
 
             validator.GetErrorMessage().Should().Be("Answer accepts only valid 16 digits credit cards.");
         }
