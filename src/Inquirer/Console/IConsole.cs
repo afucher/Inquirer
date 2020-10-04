@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace InquirerCore.Console
@@ -15,5 +16,7 @@ namespace InquirerCore.Console
         int CursorTop { get; set; }
         int WindowWidth { get; set; }
         bool KeyAvailable { get; }
+        ConsoleColor ForegroundColor { get; set; }
+        void ResetColor();
     }
 }

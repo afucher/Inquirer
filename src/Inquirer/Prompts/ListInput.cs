@@ -57,7 +57,25 @@ namespace InquirerCore.Prompts
 
         public override int[] Render()
         {
-            return consoleRender.Render(GetQuestion(), new string[] {});
+            ListInputMessage[] messages = ToListInputMessages(GetQuestion());
+            return consoleRender.RenderList(messages, new string[] { });
+        }
+
+        public ListInputMessage[] ToListInputMessages(string[] questions)
+        {
+            var messages = new ListInputMessage[questions.Length];
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                messages[i] = new ListInputMessage(questions[i]);
+                if ((selectedOption + 1) == i)
+                    messages[i].SetSelectedItem(true);
+            }
+
+            if (selectedOption == 0)
+                messages[1].SetSelectedItem(true);
+
+            return messages;
         }
     }
 }
