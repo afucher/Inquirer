@@ -10,6 +10,7 @@ namespace InquirerUnitTest.Validators
         [Theory]
         [InlineData("1")]
         [InlineData("50")]
+        [InlineData("75%")]
         [InlineData("100")]
         [InlineData("0.01")]
         [InlineData("0")]
@@ -25,7 +26,7 @@ namespace InquirerUnitTest.Validators
         [Theory]
         [InlineData("")]
         [InlineData("100.01")]
-        [InlineData("5000")]
+        [InlineData("5000%")]
         [InlineData("-1")]
         [InlineData("abc")]
         [InlineData("1sdw!")]
@@ -44,7 +45,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new PercentageValidator();
 
-            validator.GetErrorMessage().Should().Be("Sorry, a percentage must be a number between 0 and 100");
+            validator.GetErrorMessage().Should().Be("A percentage must be a number between 0 and 100");
         }
     }
 }

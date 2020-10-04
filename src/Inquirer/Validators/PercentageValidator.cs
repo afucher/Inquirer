@@ -8,7 +8,8 @@ namespace InquirerCore.Validators
         {
             try
             {
-                var number = float.Parse(value);
+                var numberWithoutPercent = value.Replace("%", "");
+                var number = float.Parse(numberWithoutPercent);
                 return number >= 0 && number <= 100;
             }
             catch (Exception)
@@ -19,7 +20,7 @@ namespace InquirerCore.Validators
 
         public string GetErrorMessage()
         {
-            return "Sorry, a percentage must be a number between 0 and 100";
+            return "A percentage must be a number between 0 and 100";
         }
     }
 }
