@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using InquirerCore.Prompts;
 
@@ -24,6 +25,18 @@ namespace InquirerCore.Console
             return new [] { content.Length, bottomContent.Length };
         }
 
+        public int[] RenderList(ListInputMessage[] content, string[] bottomContent)
+        {
+            content.ToList().ForEach(item => {
+                console.ForegroundColor = item.ConsoleColor;
+                console.WriteLine(item.Message);
+            });
+            Newline();
+            console.ResetColor();
+            bottomContent.ToList().ForEach(message => console.WriteLine(message));
+            console.CursorTop = console.CursorTop - (bottomContent.Length + 1);
+            return new[] { content.Length, bottomContent.Length };
+        }
 
         public void Clean(int initialPos, int endPos)
         {

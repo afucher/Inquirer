@@ -62,8 +62,41 @@ namespace InquirerUnitTest
             var input = new ListInput(name, message, new string[] { "option1", "option2" }, consoleRender);
             input.Render();
 
-            consoleRender.Received().Render(Arg.Any<string[]>(), Arg.Any<string[]>());
+            consoleRender.Received().RenderList(Arg.Any<ListInputMessage[]>(), Arg.Any<string[]>());
         }
 
+        [Fact]
+        public void FirstQuestionShoulBeADifferentColor()
+        {
+            var message = "Which option?";
+            var name = "option";
+            var options = new string[] { "option1", "option2" };
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new ListInput(name, message, options, consoleRender);
+
+            var questions = input.GetQuestion();
+            var inputMessages = input.ToListInputMessages(questions);
+
+            inputMessages[1].Message.Should().Be("> option1");
+            inputMessages[1].IsSelected.Should().Be(true);
+            inputMessages[1].ConsoleColor.Should().Be(ConsoleColor.Cyan);
+        }
+
+        [Fact]
+        public void FirstQuestionNotShoulBeADifferentColor()
+        {
+            var message = "Which option?";
+            var name = "Name";
+            var options = new string[] { "option1", "option2" };
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new ListInput(name, message, options, consoleRender);
+
+            var questions = input.GetQuestion();
+            var inputMessages = input.ToListInputMessages(questions);
+
+            inputMessages[2].Message.Should().Be("option2");
+            inputMessages[2].IsSelected.Should().Be(false);
+            inputMessages[2].ConsoleColor.Should().NotBe(ConsoleColor.Cyan);
+        }
     }
 }

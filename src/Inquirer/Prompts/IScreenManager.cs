@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design;
+﻿using System;
+using System.ComponentModel.Design;
 using InquirerCore.Console;
 
 namespace InquirerCore.Prompts
@@ -7,6 +8,7 @@ namespace InquirerCore.Prompts
     {
         int[,] RenderMultipleMessages(string[] messages);
         int[] Render(string[] content, string[] bottomContent);
+        int[] RenderList(ListInputMessage[] content, string[] bottomContent);
         void Clean(int initialPos, int endPos);
         string ReadLine();
         IInputObservable GetInputObservable();
