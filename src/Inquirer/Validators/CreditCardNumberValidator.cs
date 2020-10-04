@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace InquirerCore.Validators
 {
@@ -7,12 +9,68 @@ namespace InquirerCore.Validators
         public bool Validate(string value)
         {
             //Remove spaces and dashes
-            string cleanValue = new Regex(@"[\s-]+")
+            var cleanCreditCardNumber = new Regex(@"[\s-]+")
                 .Replace(value, "");
 
-            // It matches a 16 digits number?
-            return new Regex(@"^\d{16}$")
-                .Match(cleanValue).Success;
+            // Is a valid value with sixteen digits
+            var isOnlyDigits = new Regex(@"^[0-9]+$")
+                .Match(cleanCreditCardNumber).Success;
+
+            if (!isOnlyDigits)
+            {
+                return false;
+            }
+
+            return IsValidLuhnAlgorithm(cleanCreditCardNumber);
+        }
+
+        private bool IsValidLuhnAlgorithm(string cleanCreditCardNumber)
+        {
+            // Store the last digit (check digit)
+            var checkDigit = cleanCreditCardNumber[cleanCreditCardNumber.Length - 1];
+
+            // Remove the last digit (check digit)
+            cleanCreditCardNumber = cleanCreditCardNumber.Remove(cleanCreditCardNumber.Length - 1);
+
+            // Reverse all digits
+            cleanCreditCardNumber = new string(cleanCreditCardNumber.Reverse().ToArray());
+
+            // Convert the clean credit card number into a int list
+            var creditCardNumArr = cleanCreditCardNumber.ToCharArray().Select(x => (int) char.GetNumericValue(x)).ToList();
+
+            // Multiply odd position digits by 2
+            var creditCardNumArrTemp = new List<int>();
+            for (int i = 0; i < creditCardNumArr.Count; i++)
+            {
+                if ((i + 1) % 2 != 0)
+                {
+                    creditCardNumArrTemp.Add(creditCardNumArr[i] * 2);
+                }
+                else
+                {
+                    creditCardNumArrTemp.Add(creditCardNumArr[i]);
+                }
+            }
+            creditCardNumArr = creditCardNumArrTemp;
+            
+            // Subtract 9 to all numbers above 9
+            creditCardNumArr = creditCardNumArr.Select(x =>
+            {
+                if (x > 9)
+                {
+                    return x - 9;
+                }
+                return x;
+            }).ToList();
+
+            // Get numbers total
+            var ccNumbersTotal = creditCardNumArr.Sum();
+
+            // Get modulos of total
+            var moduloOfNumbersTotal = (10 - (ccNumbersTotal % 10)) % 10;
+
+            // If modulo of total is equal to the check digit
+            return moduloOfNumbersTotal == (int) char.GetNumericValue(checkDigit);
         }
 
         public string GetErrorMessage()
