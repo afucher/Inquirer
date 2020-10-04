@@ -56,7 +56,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new CreditCardNumberValidator();
 
-            validator.GetErrorMessage().Should().Be("Answer accepts only valid 16 digits credit cards.");
+            validator.GetErrorMessage().Should().Be("Answer accepts only valid credit cards numbers.");
         }
     }
 }

@@ -75,7 +75,7 @@ namespace InquirerCore.Validators
 
         public string GetErrorMessage()
         {
-            return "Answer accepts only valid 16 digits credit cards.";
+            return "Answer accepts only valid credit cards numbers.";
         }
     }
 }
