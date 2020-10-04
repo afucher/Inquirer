@@ -37,7 +37,9 @@ namespace InquirerUnitTest.Validators
         [InlineData("1111 2222 3333 4443")]
         [InlineData("1111-2222-3333-4443")]
         [InlineData("11112123123123123123123122233334444")]
+        [InlineData("12345678901234567890")]
         [InlineData("213@1")]
+        [InlineData("2131")]
         [InlineData("123456789012345'")]
         [InlineData("asdfghjkl;qwerty")]
         public void ShouldNotAcceptInvalidCreditCard(string validCreditCard)

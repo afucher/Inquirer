@@ -13,10 +13,10 @@ namespace InquirerCore.Validators
                 .Replace(value, "");
 
             // Is a valid value with sixteen digits
-            var isOnlyDigits = new Regex(@"^[0-9]+$")
+            var isValidNumberFormat = new Regex(@"^[0-9]{8,19}$")
                 .Match(cleanCreditCardNumber).Success;
 
-            if (!isOnlyDigits)
+            if (!isValidNumberFormat)
             {
                 return false;
             }
