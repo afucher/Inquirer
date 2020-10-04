@@ -8,15 +8,15 @@ namespace InquirerCore.Validators
     {
         public bool Validate(string value)
         {
-            //Remove spaces and dashes
+            // Remove spaces and dashes
             var cleanCreditCardNumber = new Regex(@"[\s-]+")
                 .Replace(value, "");
 
-            // Is a valid value with sixteen digits
+            // Is all digits with length between 8 and 19?
             var isValidNumberFormat = new Regex(@"^[0-9]{8,19}$")
                 .Match(cleanCreditCardNumber).Success;
 
-            if (!isValidNumberFormat)
+            if (isValidNumberFormat == false)
             {
                 return false;
             }
@@ -36,7 +36,7 @@ namespace InquirerCore.Validators
             cleanCreditCardNumber = new string(cleanCreditCardNumber.Reverse().ToArray());
 
             // Convert the clean credit card number into a int list
-            var creditCardNumArr = cleanCreditCardNumber.ToCharArray().Select(x => (int) char.GetNumericValue(x)).ToList();
+            var creditCardNumArr = cleanCreditCardNumber.ToCharArray().Select(x => (int)char.GetNumericValue(x)).ToList();
 
             // Multiply odd position digits by 2
             var creditCardNumArrTemp = new List<int>();
@@ -52,7 +52,7 @@ namespace InquirerCore.Validators
                 }
             }
             creditCardNumArr = creditCardNumArrTemp;
-            
+
             // Subtract 9 to all numbers above 9
             creditCardNumArr = creditCardNumArr.Select(x =>
             {
@@ -66,11 +66,11 @@ namespace InquirerCore.Validators
             // Get numbers total
             var ccNumbersTotal = creditCardNumArr.Sum();
 
-            // Get modulos of total
+            // Get modulo of total
             var moduloOfNumbersTotal = (10 - (ccNumbersTotal % 10)) % 10;
 
             // If modulo of total is equal to the check digit
-            return moduloOfNumbersTotal == (int) char.GetNumericValue(checkDigit);
+            return moduloOfNumbersTotal == (int)char.GetNumericValue(checkDigit);
         }
 
         public string GetErrorMessage()
