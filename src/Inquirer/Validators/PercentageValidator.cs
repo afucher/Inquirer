@@ -8,8 +8,11 @@ namespace InquirerCore.Validators
         {
             try
             {
-                var numberWithoutPercent = value.Replace("%", "");
-                var number = float.Parse(numberWithoutPercent);
+                if (value.EndsWith("%"))
+                {
+                    value = value.Remove(value.Length - 1);
+                }
+                var number = float.Parse(value);
                 return number >= 0 && number <= 100;
             }
             catch (Exception)
