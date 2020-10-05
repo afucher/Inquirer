@@ -24,6 +24,7 @@ ageInput.SetValid(numbersOnly);
 We already have some validators that you can use:
  - RegexValidator
  - NumericValidator  
+ - CreditCardNumberValidator
  - EmailValidator
 
 But feel free to implement yours or contribute with more validators 😉
