@@ -18,10 +18,7 @@ namespace InquirerCore.Console
                                                                 ConsoleKey.D9 };
         public static bool isDigit(ConsoleKey key)
         {
-            //Update Oct 1, 2020
-            //If the digit is D2 (@ special character) then it will go back one character and the next will replace it
-            //Adding a condition to avoid this and include the @ special character
-            return (key != ConsoleKey.D2) && DigitsKeys.Contains(key);
+            return DigitsKeys.Contains(key);
         }
     }
 }

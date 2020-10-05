@@ -49,7 +49,7 @@ namespace InquirerCore.Console
         public IObservable<string> GetLineObservable()
         {
             return input.TakeUntil(GetEnterObservable())
-                        .Where(IsNormalKey)
+                        .Where(IsNormalKeyOrAtCharacter)
                         .Aggregate("", BuildLine);
         }
 
@@ -79,6 +79,19 @@ namespace InquirerCore.Console
             return !ConsoleUtils.isDigit(key.Key);
         }
 
+        /// <summary>
+        /// Validate if the key entered is a normal key or the @ character
+        /// </summary>
+        /// <param name="key">The current key entered</param>
+        /// <returns>A boolean representing whether the key entered is a normal key or the @ character</returns>
+        public bool IsNormalKeyOrAtCharacter(ConsoleKeyInfo key)
+        {
+            var hasShift = key.Modifiers.HasFlag(ConsoleModifiers.Shift);
+            if (!hasShift) return true;
+
+            return !ConsoleUtils.isDigit(key.Key) || key.Key == ConsoleKey.D2;
+        }
+
         private void ImplementKeysBehaviours(ConsoleKeyInfo cki)
         {
             var key = cki.Key;
@@ -89,7 +102,12 @@ namespace InquirerCore.Console
                     break;
             };
             var hasShift = cki.Modifiers.HasFlag(ConsoleModifiers.Shift);
-            if (hasShift && ConsoleUtils.isDigit(key)) console.Write("\b");
+
+
+            //Update Oct 1, 2020
+            //If the digit is D2 (@ special character) then it will go back one character and the next will replace it
+            //Adding a condition to avoid this and include the @ special character
+            if (hasShift && ConsoleUtils.isDigit(key) && (key != ConsoleKey.D2)) console.Write("\b");
         }
 
         public void Intercept(bool intercept)
