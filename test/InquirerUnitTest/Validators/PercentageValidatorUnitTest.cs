@@ -9,6 +9,9 @@ namespace InquirerUnitTest.Validators
     {
         [Theory]
         [InlineData("1")]
+        [InlineData("%%5%%")]
+        [InlineData("%10%")]
+        [InlineData("2%5")]
         [InlineData("50")]
         [InlineData("75%")]
         [InlineData("100")]
@@ -28,6 +31,7 @@ namespace InquirerUnitTest.Validators
         [InlineData("100.01")]
         [InlineData("5000%")]
         [InlineData("-1")]
+        [InlineData("$1")]
         [InlineData("abc")]
         [InlineData("1sdw!")]
         [InlineData("-")]
