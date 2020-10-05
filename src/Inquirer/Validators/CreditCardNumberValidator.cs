@@ -16,12 +16,11 @@ namespace InquirerCore.Validators
             var isValidNumberFormat = new Regex(@"^[0-9]{8,19}$")
                 .Match(cleanCreditCardNumber).Success;
 
-            if (isValidNumberFormat == false)
-            {
-                return false;
-            }
+            if (isValidNumberFormat) return IsValidLuhnAlgorithm(cleanCreditCardNumber);
+           
+            return false;
 
-            return IsValidLuhnAlgorithm(cleanCreditCardNumber);
+            
         }
 
         private bool IsValidLuhnAlgorithm(string cleanCreditCardNumber)
