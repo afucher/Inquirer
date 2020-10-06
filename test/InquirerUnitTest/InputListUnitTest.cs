@@ -62,7 +62,7 @@ namespace InquirerUnitTest
             var input = new ListInput(name, message, new string[] { "option1", "option2" }, consoleRender);
             input.Render();
 
-            consoleRender.Received().RenderList(Arg.Any<ListInputMessage[]>(), Arg.Any<string[]>());
+            consoleRender.Received().Render(Arg.Any<ConsoleMessage[]>(), Arg.Any<ConsoleMessage[]>());
         }
 
         [Fact]
@@ -75,15 +75,14 @@ namespace InquirerUnitTest
             var input = new ListInput(name, message, options, consoleRender);
 
             var questions = input.GetQuestion();
-            var inputMessages = input.ToListInputMessages(questions);
+            var inputMessages = input.ProcessInputMessages(questions);
 
             inputMessages[1].Message.Should().Be("> option1");
-            inputMessages[1].IsSelected.Should().Be(true);
             inputMessages[1].ConsoleColor.Should().Be(ConsoleColor.Cyan);
         }
 
         [Fact]
-        public void FirstQuestionNotShoulBeADifferentColor()
+        public void SecondQuestionNotShoulBeADifferentColor()
         {
             var message = "Which option?";
             var name = "Name";
@@ -92,10 +91,9 @@ namespace InquirerUnitTest
             var input = new ListInput(name, message, options, consoleRender);
 
             var questions = input.GetQuestion();
-            var inputMessages = input.ToListInputMessages(questions);
+            var inputMessages = input.ProcessInputMessages(questions);
 
             inputMessages[2].Message.Should().Be("option2");
-            inputMessages[2].IsSelected.Should().Be(false);
             inputMessages[2].ConsoleColor.Should().NotBe(ConsoleColor.Cyan);
         }
     }

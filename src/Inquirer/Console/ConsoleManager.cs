@@ -25,15 +25,18 @@ namespace InquirerCore.Console
             return new [] { content.Length, bottomContent.Length };
         }
 
-        public int[] RenderList(ListInputMessage[] content, string[] bottomContent)
+        public int[] Render(ConsoleMessage[] content, ConsoleMessage[] bottomContent)
         {
-            content.ToList().ForEach(item => {
-                console.ForegroundColor = item.ConsoleColor;
+            content.ToList().ForEach(item =>
+            {
+                if (item.ConsoleColor.HasValue)
+                    console.ForegroundColor = item.ConsoleColor.Value;
+
                 console.WriteLine(item.Message);
             });
             Newline();
             console.ResetColor();
-            bottomContent.ToList().ForEach(message => console.WriteLine(message));
+            bottomContent.ToList().ForEach(item => console.WriteLine(item.Message));
             console.CursorTop = console.CursorTop - (bottomContent.Length + 1);
             return new[] { content.Length, bottomContent.Length };
         }
