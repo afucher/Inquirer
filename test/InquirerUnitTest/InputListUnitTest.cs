@@ -62,8 +62,39 @@ namespace InquirerUnitTest
             var input = new ListInput(name, message, new string[] { "option1", "option2" }, consoleRender);
             input.Render();
 
-            consoleRender.Received().Render(Arg.Any<string[]>(), Arg.Any<string[]>());
+            consoleRender.Received().Render(Arg.Any<ConsoleMessage[]>(), Arg.Any<ConsoleMessage[]>());
         }
 
+        [Fact]
+        public void FirstQuestionShoulBeADifferentColor()
+        {
+            var message = "Which option?";
+            var name = "option";
+            var options = new string[] { "option1", "option2" };
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new ListInput(name, message, options, consoleRender);
+
+            var questions = input.GetQuestion();
+            var inputMessages = input.ProcessInputMessages(questions);
+
+            inputMessages[1].Message.Should().Be("> option1");
+            inputMessages[1].ConsoleColor.Should().Be(ConsoleColor.Cyan);
+        }
+
+        [Fact]
+        public void SecondQuestionNotShoulBeADifferentColor()
+        {
+            var message = "Which option?";
+            var name = "Name";
+            var options = new string[] { "option1", "option2" };
+            var consoleRender = Substitute.For<IScreenManager>();
+            var input = new ListInput(name, message, options, consoleRender);
+
+            var questions = input.GetQuestion();
+            var inputMessages = input.ProcessInputMessages(questions);
+
+            inputMessages[2].Message.Should().Be("option2");
+            inputMessages[2].ConsoleColor.Should().NotBe(ConsoleColor.Cyan);
+        }
     }
 }

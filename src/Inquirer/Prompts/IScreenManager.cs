@@ -7,6 +7,7 @@ namespace InquirerCore.Prompts
     {
         int[,] RenderMultipleMessages(string[] messages);
         int[] Render(string[] content, string[] bottomContent);
+        int[] Render(ConsoleMessage[] content, ConsoleMessage[] bottomContent);
         void Clean(int initialPos, int endPos);
         string ReadLine();
         IInputObservable GetInputObservable();
