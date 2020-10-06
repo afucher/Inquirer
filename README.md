@@ -26,6 +26,7 @@ We already have some validators that you can use:
  - NumericValidator  
  - CreditCardNumberValidator
  - EmailValidator
+ - FullNameValidator
 
 But feel free to implement yours or contribute with more validators 😉
 
