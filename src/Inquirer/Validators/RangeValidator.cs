@@ -1,35 +1,35 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System;
+﻿using System;
 
 namespace InquirerCore.Validators
 {
-    public class RangeValidator : IValidator
+  public class RangeValidator : IValidator
+  {
+    private int Min { set; get; }
+    private int Max { set; get; }
+
+    public RangeValidator(int minValue, int maxValue)
     {
-    private int iMin { set; get; }
-    private int iMax { set; get; }
-
-        public RangeValidator(int _iMin, int _iMax)
-        {
-          iMin = _iMin;
-          iMax = _iMax;
-        }
-
-        public bool Validate(string value)
-        {
-            try
-            {
-              int iVal = int.Parse(value);
-              return iVal >= iMin && iVal <= iMax;
-            }
-            catch (Exception e)
-            {
-              return false;
-            }
-        }
-
-        public string GetErrorMessage()
-        {
-        return String.Format("Answer accepts between {0} to {1}.", iMin, iMax);
-        }
+      Min = minValue;
+      Max = maxValue;
     }
+
+    public bool Validate(string value)
+    {
+      try
+      {
+        int iVal = int.Parse(value);
+        return iVal >= Min && iVal <= Max;
+      }
+      catch (Exception e)
+      {
+        return false;
+      }
+    }
+
+    public string GetErrorMessage()
+    {
+      return $"Answer accepts between {Min} to {Max}.";
+        //String.Format("Answer accepts between {0} to {1}.", Min, Max);
+    }
+  }
 }
