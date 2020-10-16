@@ -17,8 +17,8 @@ namespace InquirerCore.Validators
     {
       try
       {
-        int iVal = int.Parse(value);
-        return iVal >= Min && iVal <= Max;
+        int val = int.Parse(value);
+        return val >= Min && val <= Max;
       }
       catch (Exception e)
       {
@@ -29,7 +29,6 @@ namespace InquirerCore.Validators
     public string GetErrorMessage()
     {
       return $"Answer accepts between {Min} to {Max}.";
-        //String.Format("Answer accepts between {0} to {1}.", Min, Max);
     }
   }
 }
