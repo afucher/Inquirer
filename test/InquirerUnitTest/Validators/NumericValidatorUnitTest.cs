@@ -40,7 +40,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new NumericValidator();
 
-            validator.GetErrorMessage().Should().Be("Answer accepts only numbers.");
+            validator.ErrorMessage.Should().Be("Answer accepts only numbers.");
         }
     }
 }

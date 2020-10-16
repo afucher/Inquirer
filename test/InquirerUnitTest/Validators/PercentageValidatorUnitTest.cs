@@ -53,7 +53,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new PercentageValidator();
 
-            validator.GetErrorMessage().Should().Be("A percentage must be a number between 0 and 100");
+            validator.ErrorMessage.Should().Be("A percentage must be a number between 0 and 100");
         }
     }
 }

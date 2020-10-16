@@ -2,9 +2,19 @@
 
 namespace InquirerCore.Validators
 {
-    public class EmailValidator : IValidator
+    public class EmailValidator : BaseValidator
     {
-        public bool Validate(string value)
+        public EmailValidator() : base("Answer accepts only valid Email adresses.")
+        {
+
+        }
+
+        public EmailValidator(string errorMessage) : base(errorMessage)
+        {
+
+        }
+
+        public override bool Validate(string value)
         {
             try
             {
@@ -15,11 +25,6 @@ namespace InquirerCore.Validators
             {
                 return false;
             }
-        }
-
-        public string GetErrorMessage()
-        {
-            return "Answer accepts only valid Email adresses.";
         }
     }
 }

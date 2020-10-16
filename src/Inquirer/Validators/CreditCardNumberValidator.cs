@@ -4,9 +4,21 @@ using System.Text.RegularExpressions;
 
 namespace InquirerCore.Validators
 {
-    public class CreditCardNumberValidator : IValidator
+    public class CreditCardNumberValidator : BaseValidator
     {
-        public bool Validate(string value)
+        public CreditCardNumberValidator(string errorMessage)
+            : base(errorMessage)
+        {
+
+        }
+
+        public CreditCardNumberValidator()
+            : base("Answer accepts only valid credit cards numbers.")
+        {
+
+        }
+
+        public override bool Validate(string value)
         {
             // Remove spaces and dashes
             var cleanCreditCardNumber = new Regex(@"[\s-]+")
@@ -19,8 +31,6 @@ namespace InquirerCore.Validators
             if (isValidNumberFormat) return IsValidLuhnAlgorithm(cleanCreditCardNumber);
            
             return false;
-
-            
         }
 
         private bool IsValidLuhnAlgorithm(string cleanCreditCardNumber)
@@ -70,11 +80,6 @@ namespace InquirerCore.Validators
 
             // If modulo of total is equal to the check digit
             return moduloOfNumbersTotal == (int)char.GetNumericValue(checkDigit);
-        }
-
-        public string GetErrorMessage()
-        {
-            return "Answer accepts only valid credit cards numbers.";
         }
     }
 }

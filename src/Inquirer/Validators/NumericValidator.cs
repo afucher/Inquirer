@@ -2,24 +2,29 @@
 
 namespace InquirerCore.Validators
 {
-    public class NumericValidator : IValidator
+    public class NumericValidator : BaseValidator
     {
-        public bool Validate(string value)
+        public NumericValidator() : base("Answer accepts only numbers.")
+        {
+
+        }
+
+        public NumericValidator(string errorMessage) : base(errorMessage)
+        {
+
+        }
+
+        public override bool Validate(string value)
         {
             try
             {
                 float.Parse(value);
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
-        }
-
-        public string GetErrorMessage()
-        {
-            return "Answer accepts only numbers.";
         }
     }
 }

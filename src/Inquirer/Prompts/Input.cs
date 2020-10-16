@@ -48,7 +48,7 @@ namespace InquirerCore.Prompts
         public override int[] Render()
         {
             var bottomContent = new List<string>();
-            if(!_isValid) bottomContent.Add(Validator.GetErrorMessage());
+            if(!_isValid) bottomContent.Add(Validator.ErrorMessage);
             
             return consoleRender.Render(GetQuestion(), bottomContent.ToArray());
         }

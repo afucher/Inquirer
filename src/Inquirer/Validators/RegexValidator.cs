@@ -3,22 +3,20 @@ using System.Text.RegularExpressions;
 
 namespace InquirerCore.Validators
 {
-    public class RegexValidator : IValidator
+    public class RegexValidator : BaseValidator
     {
         protected string pattern;
-        public RegexValidator(string pattern)
+
+        public RegexValidator(string pattern) : base($"Answer should match pattern {pattern}")
         {
             this.pattern = pattern;
         }
 
-        public bool Validate(string value)
+        public RegexValidator(string pattern, string errorMessage) : base(errorMessage)
         {
-            return Regex.IsMatch(value, pattern);
+            this.pattern = pattern;
         }
 
-        public string GetErrorMessage()
-        {
-            return $"Answer should match pattern {pattern}";
-        }
+        public override bool Validate(string value) => Regex.IsMatch(value, pattern);
     }
 }

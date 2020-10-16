@@ -2,16 +2,18 @@
 
 namespace InquirerCore.Validators
 {
-    public class DateValidator : IValidator
+    public class DateValidator : BaseValidator
     {
-        public bool Validate(string value)
+        public DateValidator() : base("Answer accepts only dates.")
         {
-            return DateTime.TryParse(value, out _);
+
         }
 
-        public string GetErrorMessage()
+        public DateValidator(string errorMessage) : base(errorMessage)
         {
-            return "Answer accepts only dates.";
+
         }
+
+        public override bool Validate(string value) => DateTime.TryParse(value, out _);
     }
 }

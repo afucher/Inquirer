@@ -2,9 +2,19 @@ using System;
 
 namespace InquirerCore.Validators 
 {
-    public class PercentageValidator : IValidator
+    public class PercentageValidator : BaseValidator
     {
-        public bool Validate(string value)
+        public PercentageValidator() : base("A percentage must be a number between 0 and 100")
+        {
+
+        }
+
+        public PercentageValidator(string errorMessage) : base(errorMessage)
+        {
+
+        }
+
+        public override bool Validate(string value)
         {
             try
             {
@@ -19,11 +29,6 @@ namespace InquirerCore.Validators
             {
                 return false;
             }
-        }
-
-        public string GetErrorMessage()
-        {
-            return "A percentage must be a number between 0 and 100";
         }
     }
 }

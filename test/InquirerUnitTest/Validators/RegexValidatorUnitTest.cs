@@ -31,7 +31,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new RegexValidator("[a]");
 
-            validator.GetErrorMessage().Should().Be("Answer should match pattern [a]");
+            validator.ErrorMessage.Should().Be("Answer should match pattern [a]");
         }
         
     }

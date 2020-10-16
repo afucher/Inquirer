@@ -120,7 +120,7 @@ namespace InquirerUnitTest
             consoleRender.ReadLine().Returns(answer);
             consoleRender.Render(Arg.Any<string[]>(), Arg.Any<string[]>()).Returns(new int[2]);
             valid.Validate(answer).Returns(false, true);
-            valid.GetErrorMessage().Returns(errorMessage);
+            valid.ErrorMessage.Returns(errorMessage);
 
             input.SetValid(valid);
             input.Ask();
