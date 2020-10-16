@@ -79,5 +79,22 @@ namespace InquirerUnitTest
             scheduler.Start();
             line.Should().Be(expectedLine);
         }
+
+        [Fact]
+        public void LineObservableShouldIncludeAtSign()
+        {
+            var line = "";
+            var expectedLine = "@";
+            var scheduler = new TestScheduler();
+            var console = Substitute.For<IConsole>();
+            var consoleObservable = new ConsoleObservable(console, scheduler);
+            var keys = ckiFactory.GetMultipleLetters("@\n");
+
+            console.ReadKey(Arg.Any<bool>()).Returns(keys.First(), keys.Skip(1).ToArray());
+
+            consoleObservable.GetLineObservable().Subscribe(x => line = x);
+            scheduler.Start();
+            line.Should().Be(expectedLine);
+        }
     }
 }
