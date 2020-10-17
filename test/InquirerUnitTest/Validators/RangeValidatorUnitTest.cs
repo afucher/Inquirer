@@ -42,7 +42,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new RangeValidator(lowerRange, upperRange);
 
-            validator.GetErrorMessage().Should().Be("Answer accepts between 0 to 10.");
+            validator.ErrorMessage.Should().Be("Answer accepts between 0 to 10.");
         }
     }
 }
