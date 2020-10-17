@@ -15,5 +15,7 @@ namespace InquirerCore.Console
         int CursorTop { get; set; }
         int WindowWidth { get; set; }
         bool KeyAvailable { get; }
+        ConsoleColor ForegroundColor { get; set; }
+        void ResetColor();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InquirerCore.Console;
+using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Text;
@@ -57,7 +58,24 @@ namespace InquirerCore.Prompts
 
         public override int[] Render()
         {
-            return consoleRender.Render(GetQuestion(), new string[] {});
+            ConsoleMessage[] messages = ProcessInputMessages(GetQuestion());
+            return consoleRender.Render(messages, new ConsoleMessage[] { });
+        }
+
+        public ConsoleMessage[] ProcessInputMessages(string[] questions)
+        {
+            var messages = new ConsoleMessage[questions.Length];
+
+            for (int i = 0; i < questions.Length; i++)
+            {
+                messages[i] = new ConsoleMessage(questions[i]);
+                if ((selectedOption + 1) == i)
+                    messages[i].SetConsoleColor(ConsoleColor.Cyan);
+                else
+                    messages[i].SetConsoleColor(ConsoleColor.Gray);
+            }
+
+            return messages;
         }
     }
 }
