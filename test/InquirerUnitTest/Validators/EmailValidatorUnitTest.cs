@@ -51,7 +51,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new EmailValidator();
 
-            validator.GetErrorMessage().Should().Be("Answer accepts only valid Email adresses.");
+            validator.ErrorMessage.Should().Be("Answer accepts only valid Email adresses.");
         }
     }
 }

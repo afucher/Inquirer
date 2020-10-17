@@ -42,7 +42,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new DateValidator();
 
-            validator.GetErrorMessage().Should().Be("Answer accepts only dates.");
+            validator.ErrorMessage.Should().Be("Answer accepts only dates.");
         }
     }
 }

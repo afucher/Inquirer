@@ -79,7 +79,7 @@ namespace InquirerUnitTest.Validators
         {
             var validator = new CreditCardNumberValidator();
 
-            validator.GetErrorMessage().Should().Be("Answer accepts only valid credit cards numbers.");
+            validator.ErrorMessage.Should().Be("Answer accepts only valid credit cards numbers.");
         }
     }
 }
