@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace InquirerCore.Console
 {
     public static class ConsoleUtils
     {
-        public static ConsoleKey[] DigitsKeys = new ConsoleKey[]{ ConsoleKey.D0,
+        //Made this private since it is only used in this class
+        private static ConsoleKey[] DigitsKeys = new ConsoleKey[]{ ConsoleKey.D0,
                                                                 ConsoleKey.D1,
                                                                 ConsoleKey.D2,
                                                                 ConsoleKey.D3,

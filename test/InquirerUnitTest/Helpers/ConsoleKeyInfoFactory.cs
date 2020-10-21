@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace InquirerUnitTest.Helpers
 {
@@ -23,6 +21,8 @@ namespace InquirerUnitTest.Helpers
                     return new ConsoleKeyInfo('\0', ConsoleKey.D6, true, false, false);
                 case 'ü':
                     return new ConsoleKeyInfo('ü', ConsoleKey.U, false, false, false);
+                case '@':
+                    return new ConsoleKeyInfo('@', ConsoleKey.D2, true, false, false);
                 default:
                     throw new Exception("Not implemented");
             }
