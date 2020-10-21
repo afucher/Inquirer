@@ -22,7 +22,7 @@ namespace InquirerUnitTest.Helpers
                 case 'ü':
                     return new ConsoleKeyInfo('ü', ConsoleKey.U, false, false, false);
                 case '@':
-                    return new ConsoleKeyInfo('@', ConsoleKey.D2, false, false, false);
+                    return new ConsoleKeyInfo('@', ConsoleKey.D2, true, false, false);
                 default:
                     throw new Exception("Not implemented");
             }
