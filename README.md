@@ -27,6 +27,7 @@ We already have some validators that you can use:
  - CreditCardNumberValidator
  - EmailValidator
  - DateValidator
+ - CpfValidator - (Brazilian Social Security Number)
 
 But feel free to implement yours or contribute with more validators 😉
 
